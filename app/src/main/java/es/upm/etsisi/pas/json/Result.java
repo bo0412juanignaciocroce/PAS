@@ -1,5 +1,5 @@
 
-package es.upm.etsisi.pas;
+package es.upm.etsisi.pas.json;
 
 import java.util.List;
 import javax.annotation.Generated;

@@ -1,7 +1,8 @@
-package es.upm.etsisi.pas;
+package es.upm.etsisi.pas.json;
 
 
-import es.upm.etsisi.myapplication.BuildConfig;
+
+import es.upm.etsisi.pas.BuildConfig;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

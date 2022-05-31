@@ -1,4 +1,4 @@
-package es.upm.etsisi.pas;
+package es.upm.etsisi.pas.recicler_view_adapters;
 
 import android.view.*;
 import android.widget.*;
@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-import es.upm.etsisi.myapplication.R;
+import es.upm.etsisi.pas.R;
+import es.upm.etsisi.pas.json.Result;
 
 public class PeliculasPojoResultAdapter extends RecyclerView.Adapter<PeliculasPojoResultAdapter
         .ViewHolder> {

@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.upm.etsisi.myapplication.R;
-import es.upm.etsisi.pas.PeliculasPojo;
-import es.upm.etsisi.pas.PeliculasPojoResultAdapter;
-import es.upm.etsisi.pas.Result;
-import es.upm.etsisi.pas.TheMovieDatabaseService;
+import es.upm.etsisi.pas.R;
+import es.upm.etsisi.pas.json.PeliculasPojo;
+import es.upm.etsisi.pas.recicler_view_adapters.PeliculasPojoResultAdapter;
+import es.upm.etsisi.pas.json.Result;
+import es.upm.etsisi.pas.json.TheMovieDatabaseService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
