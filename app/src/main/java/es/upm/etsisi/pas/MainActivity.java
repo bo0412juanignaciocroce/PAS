@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe( x -> adapter.notifyDataSetChanged() );
 
         UsuariosRepository ur = new UsuariosRepository(this.getApplication());
-        ur.deleteAll(); /* //TODO PLEASE REMOVE THIS LINE BEFORE THE END */
         final Observer<List<UsuariosEntity>> ueo =
                 new Observer<List<UsuariosEntity>>() {
                     @Override
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
         ur.getAll().observe(this,ueo);
+        ur.deleteAll(); /* //TODO PLEASE REMOVE THIS LINE BEFORE THE END */
 
         ur.insert(new UsuariosEntity("Usr1","Pwd1",(float)1.0));
         ur.insert(new UsuariosEntity("Usr2","Pwd2",(float)2.0));
