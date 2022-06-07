@@ -14,7 +14,8 @@ public interface IUsuariosDAO {
     @Query("SELECT * FROM " + es.upm.etsisi.pas.roomdb_local.UsuariosEntity.TABLA)
     LiveData<List<es.upm.etsisi.pas.roomdb_local.UsuariosEntity>> getAll();
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    /* Insert está configurado para reescribir datos en caso de coincidir */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(es.upm.etsisi.pas.roomdb_local.UsuariosEntity grupo);
 
     @Query("DELETE FROM " + es.upm.etsisi.pas.roomdb_local.UsuariosEntity.TABLA)
