@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import es.upm.etsisi.pas.R;
-import es.upm.etsisi.pas.sqlite_local_database.UsuariosEntity;
+import es.upm.etsisi.pas.roomdb_local.UsuariosEntity;
 
 public class UsuariosListAdapter extends RecyclerView.Adapter<UsuariosListAdapter.UsuarioViewHolder> {
 

@@ -1,33 +1,39 @@
-package es.upm.etsisi.pas.sqlite_local_database;
+package es.upm.etsisi.pas.roomdb_local;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {es.upm.etsisi.pas.sqlite_local_database.UsuariosEntity.class}, version = 1, exportSchema = false)
+import es.upm.etsisi.pas.MainActivity;
+
+@Database(entities = {es.upm.etsisi.pas.roomdb_local.UsuariosEntity.class}, version = 1,
+        exportSchema = false)
 public abstract class UsuariosRoomDatabase extends RoomDatabase {
 
-    public static final String BASE_DATOS = es.upm.etsisi.pas.sqlite_local_database.UsuariosEntity.TABLA + ".db";
-
-    public abstract IUsuariosDAO grupoDAO();
-
+    /* STATICS */
+    public static final String BASE_DATOS = es.upm.etsisi.pas.roomdb_local.UsuariosEntity.TABLA + ".db";
     private static volatile UsuariosRoomDatabase INSTANCE;
-
+    private static volatile Boolean UnderConstruction = false;
     private static final int NUMBER_OF_THREADS = 4;
+
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static UsuariosRoomDatabase getDatabase(final Context context) {
+    public static UsuariosRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (UsuariosRoomDatabase.class) {
-                if (INSTANCE == null) {
+                if (INSTANCE == null && !UnderConstruction) {
+                    UnderConstruction = true;
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             UsuariosRoomDatabase.class, BASE_DATOS)
                             .addCallback(sRoomDatabaseCallback)
@@ -60,4 +66,7 @@ public abstract class UsuariosRoomDatabase extends RoomDatabase {
                     });
                 }
             };
+
+    /* INSTANCES */
+    public abstract IUsuariosDAO grupoDAO();
 }

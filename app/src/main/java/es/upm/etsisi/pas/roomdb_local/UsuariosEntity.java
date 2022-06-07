@@ -1,4 +1,4 @@
-package es.upm.etsisi.pas.sqlite_local_database;
+package es.upm.etsisi.pas.roomdb_local;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
