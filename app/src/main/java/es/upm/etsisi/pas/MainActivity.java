@@ -20,6 +20,7 @@ import es.upm.etsisi.pas.json.Result;
 import es.upm.etsisi.pas.json.TheMovieDatabaseService;
 import es.upm.etsisi.pas.roomdb_local.UsuariosEntity;
 import es.upm.etsisi.pas.roomdb_local.UsuariosRepository;
+import es.upm.etsisi.pas.roomdb_local.UsuariosRoomDatabase;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 //                .subscribe( x -> adapter.notifyDataSetChanged() );
 
         /* Local database */
-        ur = new UsuariosRepository(this.getApplication());
+        ur = new UsuariosRepository(UsuariosRoomDatabase.getDatabase(this.getApplication()));
         final Observer<List<UsuariosEntity>> ueo =
                 listLiveData -> {
                     for(UsuariosEntity usuariosEntity : listLiveData) {
