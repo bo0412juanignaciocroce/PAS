@@ -1,6 +1,7 @@
 package es.upm.etsisi.pas;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.json.PeliculasPojo;
 import es.upm.etsisi.pas.recicler_view_adapters.PeliculasPojoResultAdapter;
 import es.upm.etsisi.pas.json.Result;
@@ -43,25 +45,25 @@ public class MainActivity extends AppCompatActivity {
         datos = new ArrayList<>();
 
         /* Remote JSON */
-        RecyclerView lista = findViewById(R.id.ReciclerViewPelis);
-        adapter = new PeliculasPojoResultAdapter(datos);
-        lista.setLayoutManager(new LinearLayoutManager(this));
-        lista.setAdapter(adapter);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build();
-
-        TheMovieDatabaseService service = retrofit.create(TheMovieDatabaseService.class);
-
-        service.listPopularTVShows(TheMovieDatabaseService.API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMapIterable(PeliculasPojo::getResults)
-                .map( x -> datos.add(x) )
-                .subscribe( x -> adapter.notifyDataSetChanged() );
+//        RecyclerView lista = findViewById(R.id.ReciclerViewPelis);
+//        adapter = new PeliculasPojoResultAdapter(datos);
+//        lista.setLayoutManager(new LinearLayoutManager(this));
+//        lista.setAdapter(adapter);
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://api.themoviedb.org/3/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//                .build();
+//
+//        TheMovieDatabaseService service = retrofit.create(TheMovieDatabaseService.class);
+//
+//        service.listPopularTVShows(TheMovieDatabaseService.API_KEY)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .flatMapIterable(PeliculasPojo::getResults)
+//                .map( x -> datos.add(x) )
+//                .subscribe( x -> adapter.notifyDataSetChanged() );
 
         /* Local database */
         ur = new UsuariosRepository(this.getApplication());
@@ -82,5 +84,7 @@ public class MainActivity extends AppCompatActivity {
         ur.insert(new UsuariosEntity("Usr3","Pwd3",(float)3.0));
         ur.insert(new UsuariosEntity("Usr4","Pwd4",(float)4.0));
 
+        Intent intent = new Intent(this.getApplicationContext(), AutenticacionUsuarios.class);
+        startActivity(intent);
     }
 }

@@ -20,5 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios">
+
+        </activity>
     </application>
 </manifest>
