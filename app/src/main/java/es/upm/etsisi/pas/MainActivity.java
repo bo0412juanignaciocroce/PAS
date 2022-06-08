@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
                 MainFragment.class,null) .commit();
     }
 
+    public static void AddFragmentToStack(Fragment f){
+        Log.d(DebugTags.FRAGMENT_TAG,"Adding activity to stack");
+        FragmentTransaction transaction =
+                MainActivity.getMyFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainerView,f,null)
+                .addToBackStack(null)
+                .show(f)
+                .commit();
+    }
+
 
 
     private class LogoutHanlder implements View.OnClickListener {
@@ -66,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(activity,"Sign out",Toast.LENGTH_SHORT).show();
+            Log.d(DebugTags.FRAGMENT_TAG,"Removing activity from stack");
             au.logOut();
         }
     }

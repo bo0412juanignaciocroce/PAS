@@ -2,7 +2,6 @@ package es.upm.etsisi.pas;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,6 @@ public class MainFragment extends Fragment {
         public FuncionalidadesDisponiblesAdapter(
                 ArrayList<FuncionalidadesDisponibles> funcionalidadesDisponibles) {
             datos = funcionalidadesDisponibles;
-            Log.d("DATOS_SET","DAATOOS : "+datos.size());
         }
 
         @NonNull
@@ -85,20 +83,12 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final int position = getAdapterPosition();
-                Log.d("OnClickMagic",position+": WOOT");
                 cambiarDeFragment(position);
             }
         }
 
         protected void cambiarDeFragment(int position){
-            Log.d("DABUG",position+"Faiil");
-            FragmentTransaction transaction =
-                    MainActivity.getMyFragmentManager().beginTransaction();
-            Fragment f = datos.get(position).fragment;
-            transaction.replace(R.id.fragmentContainerView,f,null)
-                    .addToBackStack(null)
-                    .show(f)
-                    .commit();
+            MainActivity.AddFragmentToStack(datos.get(position).fragment);
         }
     }
 
