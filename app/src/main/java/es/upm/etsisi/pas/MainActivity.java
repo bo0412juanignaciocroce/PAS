@@ -2,6 +2,7 @@ package es.upm.etsisi.pas;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,24 +25,30 @@ import es.upm.etsisi.pas.roomdb_local.UsuariosRepository;
 
 public class MainActivity extends AppCompatActivity {
     private static Application app = null;
+    private static FragmentManager fragmentManager;
+    private static Context context;
+    private static Activity activity;
     private PeliculasPojoResultAdapter adapter = null;
     private List<Result> datos = null;
     private UsuariosRepository ur = null;
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
-    private static FragmentManager fragmentManager;
 
     public static Application getApp(){
         return app;
     }
     public static FragmentManager getMyFragmentManager(){return fragmentManager;}
+    public static Context getContext() { return context; }
+    public static Context getActivity() { return activity; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = this.getApplication();
         fragmentManager = getSupportFragmentManager();
+        context = this.getApplicationContext();
+        activity = this;
         setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
 

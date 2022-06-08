@@ -2,17 +2,14 @@ package es.upm.etsisi.pas;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.upm.etsisi.pas.json_peliculas.PeliculasFragment;
 import es.upm.etsisi.pas.notes.NotesFragment;
 
 public class MainFragment extends Fragment {
@@ -46,7 +44,7 @@ public class MainFragment extends Fragment {
         private List<FuncionalidadesDisponibles> datos;
 
         public FuncionalidadesDisponiblesAdapter(
-                ArrayList<FuncionalidadesDisponibles> funcionalidadesDisponibles) {
+                List<FuncionalidadesDisponibles> funcionalidadesDisponibles) {
             datos = funcionalidadesDisponibles;
         }
 
@@ -54,7 +52,7 @@ public class MainFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View mView = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.recyclerview_text, parent , false);
+                    R.layout.recyclerview_row_text, parent , false);
             return new FuncionalidadesDisponiblesAdapter.ViewHolder(mView);
         }
 
@@ -95,8 +93,8 @@ public class MainFragment extends Fragment {
     final FuncionalidadesDisponibles arrayFuncionalidades[] = {
             new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Notas,
                     "Notas", new NotesFragment()),
-//            new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Peliculas,
-//                    "Peliculas", fragment),
+            new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Peliculas,
+                    "Peliculas", new PeliculasFragment()),
     };
 
     FuncionalidadesDisponiblesAdapter funcionalidadesDisponiblesAdapter = null;
@@ -113,16 +111,14 @@ public class MainFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Setup any handles to view objects here
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        Log.d(DebugTags.FRAGMENT_TAG,"Cantidad en lista: "+arrayFuncionalidades.length);
         funcionalidadesDisponiblesAdapter = new FuncionalidadesDisponiblesAdapter(
                 new ArrayList<>(Arrays.asList(arrayFuncionalidades)));
 
         RecyclerView rv = view.findViewById(R.id.mainRecyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rv.setAdapter(funcionalidadesDisponiblesAdapter);
-
-    }
-
-    public void onBackButtonCallback(){
-
+        funcionalidadesDisponiblesAdapter.notifyDataSetChanged();
+        Log.d(DebugTags.FRAGMENT_TAG,"Cantidad en adapter: "+funcionalidadesDisponiblesAdapter.getItemCount());
     }
 }

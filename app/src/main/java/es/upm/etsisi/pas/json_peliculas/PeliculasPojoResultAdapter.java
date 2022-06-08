@@ -18,7 +18,7 @@ public class PeliculasPojoResultAdapter extends RecyclerView.Adapter<PeliculasPo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent ,
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_row_image_text, parent ,
                 false);
         return new ViewHolder(mView);
     }

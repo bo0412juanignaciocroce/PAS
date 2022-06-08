@@ -11,8 +11,11 @@
         <entry key="app/src/main/res/layout/content_main.xml" value="0.1640625" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.1453125" />
         <entry key="app/src/main/res/layout/main_fragment.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/notes_layout.xml" value="0.264" />
+        <entry key="app/src/main/res/layout/notes_layout.xml" value="0.1649122807017544" />
+        <entry key="app/src/main/res/layout/peliculas_layout.xml" value="0.3453125" />
         <entry key="app/src/main/res/layout/recyclerview_item.xml" value="0.2957427536231884" />
+        <entry key="app/src/main/res/layout/recyclerview_row_image_text.xml" value="0.18611111111111112" />
+        <entry key="app/src/main/res/layout/recyclerview_row_text.xml" value="0.3453125" />
         <entry key="app/src/main/res/layout/recyclerview_text.xml" value="0.1" />
         <entry key="app/src/main/res/layout/row.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.1453125" />

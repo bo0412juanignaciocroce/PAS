@@ -40,7 +40,7 @@ public class UsuariosListAdapter extends RecyclerView.Adapter<UsuariosListAdapte
     @NonNull
     @Override
     public UsuarioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_text, parent, false);
+        View itemView = mInflater.inflate(R.layout.recyclerview_row_text, parent, false);
         return new UsuarioViewHolder(itemView);
     }
 
