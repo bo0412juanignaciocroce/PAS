@@ -2,36 +2,20 @@ package es.upm.etsisi.pas;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
-import es.upm.etsisi.pas.json.PeliculasPojo;
-import es.upm.etsisi.pas.recicler_view_adapters.PeliculasPojoResultAdapter;
-import es.upm.etsisi.pas.json.Result;
-import es.upm.etsisi.pas.json.TheMovieDatabaseService;
-import es.upm.etsisi.pas.roomdb_local.UsuariosEntity;
+import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
+import es.upm.etsisi.pas.json_peliculas.Result;
 import es.upm.etsisi.pas.roomdb_local.UsuariosRepository;
-import es.upm.etsisi.pas.roomdb_local.UsuariosRoomDatabase;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -79,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //                .subscribe( x -> adapter.notifyDataSetChanged() );
 
         /* Local database */
+        /*
         ur = new UsuariosRepository(UsuariosRoomDatabase.getDatabase(this.getApplication()));
         final Observer<List<UsuariosEntity>> ueo =
                 listLiveData -> {
@@ -90,12 +75,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
         ur.getAll().observe(this,ueo);
-        ur.deleteAll(); /* //TODO PLEASE REMOVE THIS LINE BEFORE THE END */
-
+         */
+        //ur.deleteAll(); /* //TODO PLEASE REMOVE THIS LINE BEFORE THE END */
+        /*
         ur.insert(new UsuariosEntity("Usr1","Pwd1",(float)1.0));
         ur.insert(new UsuariosEntity("Usr2","Pwd2",(float)2.0));
         ur.insert(new UsuariosEntity("Usr3","Pwd3",(float)3.0));
         ur.insert(new UsuariosEntity("Usr4","Pwd4",(float)4.0));
+        */
     }
 
 
