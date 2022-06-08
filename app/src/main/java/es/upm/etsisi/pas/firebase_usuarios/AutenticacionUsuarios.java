@@ -2,7 +2,9 @@ package es.upm.etsisi.pas.firebase_usuarios;
 
 // Firebase
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,92 +21,71 @@ import es.upm.etsisi.pas.BuildConfig;
 import es.upm.etsisi.pas.R;
 import io.reactivex.rxjava3.annotations.NonNull;
 
-public class AutenticacionUsuarios extends Activity implements View.OnClickListener {
+/* Because this class is linked with AuthStateListener, at any point thta the user
+ * logs out, it will automatically call the login window.
+ */
+public class AutenticacionUsuarios {
 
     final static String LOG_TAG = "btb";
 
-    private FirebaseAuth mFirebaseAuth;
+    private final FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private final Activity activity;
+    protected CharSequence user_mail;
 
     private static final int RC_SIGN_IN = 2022;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.logoutButton).setOnClickListener(this);
-
+    public AutenticacionUsuarios(Activity activity){
+        user_mail = null;
         mFirebaseAuth = FirebaseAuth.getInstance();
+        this.activity = activity;
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                if (isLoggedIn()) {
                     // user is signed in
-                    CharSequence username = user.getDisplayName();
-                    Toast.makeText(AutenticacionUsuarios.this, getString(R.string.firebase_user_fmt, username), Toast.LENGTH_LONG).show();
-                    Log.i(LOG_TAG, "onAuthStateChanged() " + getString(R.string.firebase_user_fmt, username));
-                    ((TextView) findViewById(R.id.textView)).setText(getString(R.string.firebase_user_fmt, username));
+                    user_mail = mFirebaseAuth.getCurrentUser().getEmail();
+                    Toast.makeText(activity,
+                            activity.getString(R.string.firebase_user_fmt, user_mail),
+                            Toast.LENGTH_LONG).show();
+                    Log.i(LOG_TAG, "onAuthStateChanged() " +
+                            activity.getString(R.string.firebase_user_fmt, user_mail));
+                    ((TextView) activity.findViewById(R.id.textView)).setText(
+                            activity.getString(R.string.firebase_user_fmt, user_mail));
                 } else {
                     // user is signed out
-                    startActivityForResult(
-                            // Get an instance of AuthUI based on the default app
+                    activity.startActivity(
+                            // Get an instance of AuthUI based on the default activity
                             AuthUI.getInstance().
                                     createSignInIntentBuilder().
+                                    setTheme(R.style.LoginTheme).
+                                    setLogo(R.mipmap.ic_logo_auth).
                                     setAvailableProviders(Arrays.asList(
                                             new AuthUI.IdpConfig.GoogleBuilder().build(),
                                             new AuthUI.IdpConfig.EmailBuilder().build()
                                     )).
-                                    setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */).
-                                    //setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */).
-                                            build(),
-                            RC_SIGN_IN
+                                    setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */,
+                                            true /* hints */).
+                                    //setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */,
+                                    //true /* hints */).
+                                            build()
                     );
-
-                    //Remains logged in when unique gmail account
-                    // setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */).
-                    //setIsSmartLockEnabled(BuildConfig.DEBUG /* credentials */, true /* hints */).
-
                 }
             }
         };
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, R.string.signed_in, Toast.LENGTH_SHORT).show();
-                Log.i(LOG_TAG, "onActivityResult " + getString(R.string.signed_in));
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, R.string.signed_cancelled, Toast.LENGTH_SHORT).show();
-                Log.i(LOG_TAG, "onActivityResult " + getString(R.string.signed_cancelled));
-                finish();
-            }
-        }
+    public void login() {
+        Toast.makeText(activity,"Login!",Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
+    public Boolean isLoggedIn() {
+        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        return (user != null);
+    }
+
+    public void logOut(){
         mFirebaseAuth.signOut();
-        Log.i(LOG_TAG, getString(R.string.signed_out));
     }
 }

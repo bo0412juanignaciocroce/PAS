@@ -1,9 +1,15 @@
 package es.upm.etsisi.pas;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -33,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private PeliculasPojoResultAdapter adapter = null;
     private List<Result> datos = null;
     private UsuariosRepository ur = null;
+    private AutenticacionUsuarios au;
+    private final String LOG_TAG = "MAIN";
+    LogoutHanlder loginStatus = null;
 
     public static Application getApp(){
         return app;
@@ -44,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         app = this.getApplication();
         setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
+
+        au = new AutenticacionUsuarios(this);
+        loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);
 
         /* Remote JSON */
 //        RecyclerView lista = findViewById(R.id.ReciclerViewPelis);
@@ -84,8 +96,25 @@ public class MainActivity extends AppCompatActivity {
         ur.insert(new UsuariosEntity("Usr2","Pwd2",(float)2.0));
         ur.insert(new UsuariosEntity("Usr3","Pwd3",(float)3.0));
         ur.insert(new UsuariosEntity("Usr4","Pwd4",(float)4.0));
+    }
 
-        Intent intent = new Intent(this.getApplicationContext(), AutenticacionUsuarios.class);
-        startActivity(intent);
+
+
+    private class LogoutHanlder implements View.OnClickListener {
+        private Button b;
+        private Activity activity;
+
+        public LogoutHanlder(Button b, Activity act){
+            activity = act;
+            this.b = b;
+            b.setOnClickListener(this);
+            b.setText(R.string.logout_button);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(activity,"Sign out",Toast.LENGTH_SHORT).show();
+            au.logOut();
+        }
     }
 }
