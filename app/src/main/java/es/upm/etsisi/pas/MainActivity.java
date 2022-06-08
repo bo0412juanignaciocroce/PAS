@@ -3,11 +3,14 @@ package es.upm.etsisi.pas;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,63 +29,26 @@ public class MainActivity extends AppCompatActivity {
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
+    private static FragmentManager fragmentManager;
 
     public static Application getApp(){
         return app;
     }
+    public static FragmentManager getMyFragmentManager(){return fragmentManager;}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = this.getApplication();
+        fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
 
         au = new AutenticacionUsuarios(this);
         loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);
 
-        /* Remote JSON */
-//        RecyclerView lista = findViewById(R.id.ReciclerViewPelis);
-//        adapter = new PeliculasPojoResultAdapter(datos);
-//        lista.setLayoutManager(new LinearLayoutManager(this));
-//        lista.setAdapter(adapter);
-//
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://api.themoviedb.org/3/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-//                .build();
-//
-//        TheMovieDatabaseService service = retrofit.create(TheMovieDatabaseService.class);
-//
-//        service.listPopularTVShows(TheMovieDatabaseService.API_KEY)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMapIterable(PeliculasPojo::getResults)
-//                .map( x -> datos.add(x) )
-//                .subscribe( x -> adapter.notifyDataSetChanged() );
-
-        /* Local database */
-        /*
-        ur = new UsuariosRepository(UsuariosRoomDatabase.getDatabase(this.getApplication()));
-        final Observer<List<UsuariosEntity>> ueo =
-                listLiveData -> {
-                    for(UsuariosEntity usuariosEntity : listLiveData) {
-                        Log.e("Warning", usuariosEntity.getNombre() + " : " +
-                                usuariosEntity.getPassword() + " : " +
-                                Float.toString(usuariosEntity.getRol()));
-                        datos.add(new Result());
-                    }
-                };
-        ur.getAll().observe(this,ueo);
-         */
-        //ur.deleteAll(); /* //TODO PLEASE REMOVE THIS LINE BEFORE THE END */
-        /*
-        ur.insert(new UsuariosEntity("Usr1","Pwd1",(float)1.0));
-        ur.insert(new UsuariosEntity("Usr2","Pwd2",(float)2.0));
-        ur.insert(new UsuariosEntity("Usr3","Pwd3",(float)3.0));
-        ur.insert(new UsuariosEntity("Usr4","Pwd4",(float)4.0));
-        */
+        fragmentManager.beginTransaction().add(R.id.fragmentContainerView,
+                MainFragment.class,null) .commit();
     }
 
 

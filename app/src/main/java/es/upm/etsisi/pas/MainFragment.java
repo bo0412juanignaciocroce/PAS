@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,7 +44,7 @@ public class MainFragment extends Fragment {
 
     private class FuncionalidadesDisponiblesAdapter extends RecyclerView.Adapter<
             FuncionalidadesDisponiblesAdapter.ViewHolder>{
-        private List<FuncionalidadesDisponibles> datos = null;
+        private List<FuncionalidadesDisponibles> datos;
 
         public FuncionalidadesDisponiblesAdapter(
                 ArrayList<FuncionalidadesDisponibles> funcionalidadesDisponibles) {
@@ -80,8 +84,21 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Log.d("OnClickMagic",getAdapterPosition()+": WOOT");
+                final int position = getAdapterPosition();
+                Log.d("OnClickMagic",position+": WOOT");
+                cambiarDeFragment(position);
             }
+        }
+
+        protected void cambiarDeFragment(int position){
+            Log.d("DABUG",position+"Faiil");
+            FragmentTransaction transaction =
+                    MainActivity.getMyFragmentManager().beginTransaction();
+            Fragment f = datos.get(position).fragment;
+            transaction.replace(R.id.fragmentContainerView,f,null)
+                    .addToBackStack(null)
+                    .show(f)
+                    .commit();
         }
     }
 
@@ -112,5 +129,10 @@ public class MainFragment extends Fragment {
         RecyclerView rv = view.findViewById(R.id.mainRecyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         rv.setAdapter(funcionalidadesDisponiblesAdapter);
+
+    }
+
+    public void onBackButtonCallback(){
+
     }
 }
