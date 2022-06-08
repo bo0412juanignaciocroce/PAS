@@ -27,7 +27,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"
-            android:name="es.upm.etsisi.pas.notes.NotesFragment"
+            android:name="es.upm.etsisi.pas.MainFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="20" />

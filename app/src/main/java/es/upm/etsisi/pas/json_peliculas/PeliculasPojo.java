@@ -1,5 +1,5 @@
 
-package es.upm.etsisi.pas.json;
+package es.upm.etsisi.pas.json_peliculas;
 
 import java.util.List;
 

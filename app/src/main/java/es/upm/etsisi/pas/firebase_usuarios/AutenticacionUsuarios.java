@@ -76,10 +76,6 @@ public class AutenticacionUsuarios {
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
-    public void login() {
-        Toast.makeText(activity,"Login!",Toast.LENGTH_SHORT).show();
-    }
-
     public Boolean isLoggedIn() {
         FirebaseUser user = mFirebaseAuth.getCurrentUser();
         return (user != null);

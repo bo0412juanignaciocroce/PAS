@@ -1,4 +1,4 @@
-package es.upm.etsisi.pas.json;
+package es.upm.etsisi.pas.json_peliculas;
 
 
 
