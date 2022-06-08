@@ -21,8 +21,7 @@ public class UsuariosRepository {
      *
      * @param application app
      */
-    public UsuariosRepository(Application application) {
-        UsuariosRoomDatabase db = UsuariosRoomDatabase.getDatabase(application);
+    public UsuariosRepository(UsuariosRoomDatabase db) {
         iItemDAO = db.grupoDAO();
         ldList = iItemDAO.getAll();
     }
