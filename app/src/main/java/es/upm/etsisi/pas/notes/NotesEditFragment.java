@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
+import es.upm.etsisi.pas.firebase_usuarios.FirebaseNotes;
 
 
 public class NotesEditFragment extends Fragment {
+    FirebaseNotes firebaseNotes;
     private NotesRepository repository;
     private NotesEntity notesEntity;
 
@@ -25,6 +27,7 @@ public class NotesEditFragment extends Fragment {
 
     public NotesEditFragment(NotesRepository repository){
         this.repository = repository;
+        firebaseNotes = new FirebaseNotes();
     }
 
     public void setCurrentNotesEntity(NotesEntity entity){
@@ -60,6 +63,8 @@ public class NotesEditFragment extends Fragment {
                 repository.update(
                         notesEntity
                 );
+                /* On edit, before removing from current edit, upload to firebase */
+                firebaseNotes.UploadNote(notesEntity);
                 notesEntity=null;
                 title.setText("");
                 content.setText("");
