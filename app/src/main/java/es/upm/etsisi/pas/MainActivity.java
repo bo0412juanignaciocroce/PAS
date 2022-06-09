@@ -20,7 +20,6 @@ import java.util.List;
 import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
 import es.upm.etsisi.pas.json_peliculas.Result;
-import es.upm.etsisi.pas.roomdb_local.UsuariosRepository;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private static Activity activity;
     private PeliculasPojoResultAdapter adapter = null;
     private List<Result> datos = null;
-    private UsuariosRepository ur = null;
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
