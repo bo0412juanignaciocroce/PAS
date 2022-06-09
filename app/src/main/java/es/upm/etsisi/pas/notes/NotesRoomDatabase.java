@@ -24,6 +24,9 @@ public abstract class NotesRoomDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    /* INSTANCES */
+    public abstract INotesDAO grupoDAO();
+
     public static NotesRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (NotesRoomDatabase.class) {
@@ -62,6 +65,4 @@ public abstract class NotesRoomDatabase extends RoomDatabase {
                 }
             };
 
-    /* INSTANCES */
-    public abstract INotesDAO grupoDAO();
 }

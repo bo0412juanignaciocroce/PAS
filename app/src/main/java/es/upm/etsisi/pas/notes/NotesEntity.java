@@ -10,16 +10,13 @@ public class NotesEntity {
     @PrimaryKey(autoGenerate = true)
     protected int uid;
 
-    protected String nombre;
+    protected String titulo;
 
-    protected String password;
+    protected String contenido;
 
-    protected float rol;
-
-    public NotesEntity(String nombre, String password, float rol) {
-        this.nombre = nombre;
-        this.password = password;
-        this.rol = rol;
+    public NotesEntity(String titulo, String contenido) {
+        this.titulo = titulo;
+        this.contenido = contenido;
     }
 
     public int getUid() {
@@ -27,26 +24,19 @@ public class NotesEntity {
     }
 
     public String getNombre() {
-        return nombre;
+        return titulo;
     }
 
     public String getPassword() {
-        return password;
+        return contenido;
     }
 
-    public float getRol() {
-        return rol;
+    public void setNombre(String titulo) {
+        this.titulo = titulo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setPassword(String contenido) {
+        this.contenido = contenido;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRol(float rol) {
-        this.rol = rol;
-    }
 }
