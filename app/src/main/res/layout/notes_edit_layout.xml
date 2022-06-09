@@ -11,15 +11,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/notes_create_layout_main_title"
+            android:id="@+id/notes_edit_layout_main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Note"
+            android:text="Edit Note"
             android:textAlignment="center"
             android:textSize="@dimen/TitleSize"/>
 
         <EditText
-            android:id="@+id/notes_create_layout_title"
+            android:id="@+id/notes_edit_layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -27,7 +27,7 @@
             android:hint="Title" />
 
         <EditText
-            android:id="@+id/notes_create_layout_content"
+            android:id="@+id/notes_edit_layout_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -52,7 +52,7 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/notes_create_layout_button"
+                android:id="@+id/notes_edit_layout_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_input_add" />

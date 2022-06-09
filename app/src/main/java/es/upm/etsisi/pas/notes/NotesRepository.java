@@ -1,8 +1,12 @@
 package es.upm.etsisi.pas.notes;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+
+import es.upm.etsisi.pas.DebugTags;
 
 /* Esta clase simplemente simplifica el manejo de INotesDAO
  * evitando la necesidad de hacer el tratamiento de ellos.
@@ -16,8 +20,6 @@ public class NotesRepository {
 
     /**
      * Constructor
-     *
-     * @param application app
      */
     public NotesRepository(NotesRoomDatabase db) {
         iItemDAO = db.grupoDAO();
@@ -29,7 +31,12 @@ public class NotesRepository {
     }
 
     public long insert(NotesEntity item) {
+        Log.d(DebugTags.FRAGMENT_TAG,"Size: "+ldList.getValue().size());
         return iItemDAO.insert(item);
+    }
+
+    public void update(NotesEntity item){
+        iItemDAO.insert(item);
     }
 
     public void deleteAll() {

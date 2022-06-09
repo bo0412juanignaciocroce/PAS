@@ -19,15 +19,23 @@ import es.upm.etsisi.pas.json_peliculas.Result;
 
 public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepositoryAdapter
         .ViewHolder> {
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView userItemView;
 
         private ViewHolder(View itemView) {
             super(itemView);
             userItemView = itemView.findViewById(R.id.recyclerViewText_Text);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            final int position = getAdapterPosition();
+            cb.onClickElement(position);
         }
     }
 
+    private NotesCallback cb;
     private final LayoutInflater mInflater;
     private List<NotesEntity> itemsList;
 
@@ -36,7 +44,8 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
      *
      * @param context context
      */
-    public NotesRepositoryAdapter(Context context) {
+    public NotesRepositoryAdapter(Context context,NotesCallback cb) {
+        this.cb = cb;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -61,6 +70,10 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
     public void setItems(List<NotesEntity> userList){
         itemsList = userList;
         notifyDataSetChanged();
+    }
+
+    public NotesEntity getEntity(int pos){
+        return itemsList.get(pos);
     }
 
     /**

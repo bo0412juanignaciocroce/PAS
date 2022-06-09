@@ -3,6 +3,7 @@ package es.upm.etsisi.pas.notes;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.room.Room;
 
 import java.util.List;
 
+import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
 import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
@@ -25,14 +27,21 @@ import es.upm.etsisi.pas.json_peliculas.Result;
 
 
 public class NotesFragment extends Fragment {
+    private class FragmentCallback implements NotesCallback{
+        @Override
+        public void onClickElement(int position) {
+            handleOnClickElement(position);
+        }
+    }
+
     private NotesAddNewFragment notesAddNewFragment;
+    private NotesEditFragment notesEditFragment;
     private NotesRepository repository;
     private NotesRepositoryAdapter adapter;
     public NotesFragment(){
         NotesRoomDatabase database = NotesRoomDatabase.getDatabase(MainActivity.getContext());
         repository = new NotesRepository(database);
-        notesAddNewFragment = new NotesAddNewFragment(repository);
-        adapter = new NotesRepositoryAdapter(MainActivity.getContext());
+        adapter = new NotesRepositoryAdapter(MainActivity.getContext(), new FragmentCallback());
         /* Esto funciona permanentemente
          */
         repository.getAll().observe(this, new Observer<List<NotesEntity>>() {
@@ -42,6 +51,9 @@ public class NotesFragment extends Fragment {
                 adapter.setItems(grupos);
             }
         });
+        /* SubFragments for logic separation */
+        notesAddNewFragment = new NotesAddNewFragment(repository);
+        notesEditFragment = new NotesEditFragment(repository);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -66,5 +78,11 @@ public class NotesFragment extends Fragment {
         RecyclerView rv = view.findViewById(R.id.notes_layout_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(MainActivity.getContext()));
         rv.setAdapter(adapter);
+    }
+
+    public void handleOnClickElement(int pos){
+        Log.d(DebugTags.FRAGMENT_TAG,"Clicked position: "+pos);
+        notesEditFragment.setCurrentNotesEntity(adapter.getEntity(pos));
+        MainActivity.AddFragmentToStack(notesEditFragment);
     }
 }
