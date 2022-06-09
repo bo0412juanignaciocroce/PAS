@@ -2,6 +2,7 @@ package es.upm.etsisi.pas.notes;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
+import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
 import es.upm.etsisi.pas.firebase_usuarios.FirebaseNotes;
@@ -64,6 +66,7 @@ public class NotesEditFragment extends Fragment {
                         notesEntity
                 );
                 /* On edit, before removing from current edit, upload to firebase */
+                Log.d(DebugTags.FIREBASE_STORAGE,"New JSON: "+notesEntity.serializeGSon());
                 firebaseNotes.UploadNote(notesEntity);
                 notesEntity=null;
                 title.setText("");

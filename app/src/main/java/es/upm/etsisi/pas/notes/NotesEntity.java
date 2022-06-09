@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 @Entity(tableName = NotesEntity.TABLA)
 public class NotesEntity {
+    static Gson gson = new Gson();
     static public final String TABLA = "notes";
 
     @PrimaryKey(autoGenerate = true)
@@ -42,7 +43,6 @@ public class NotesEntity {
     }
 
     public String serializeGSon(){
-        Gson gson = new Gson();
         return gson.toJson(this);
     }
 

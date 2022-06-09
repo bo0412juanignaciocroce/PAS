@@ -2,6 +2,7 @@ package es.upm.etsisi.pas.notes;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
+import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
 import es.upm.etsisi.pas.firebase_usuarios.FirebaseNotes;
@@ -75,6 +77,7 @@ public class NotesAddNewFragment extends Fragment {
                 content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
 
+                Log.d(DebugTags.FIREBASE_STORAGE,"New JSON: "+newNote.serializeGSon());
                 firebaseNotes.UploadNote(newNote);
             }
         });
