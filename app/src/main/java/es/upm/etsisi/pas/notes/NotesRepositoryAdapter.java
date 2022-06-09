@@ -51,7 +51,7 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (itemsList != null) {
             NotesEntity current = itemsList.get(position);
-            holder.userItemView.setText(current.getNombre());
+            holder.userItemView.setText(current.getTitle());
         } else {
             // Covers the case of data not being ready yet.
             holder.userItemView.setText("No item");

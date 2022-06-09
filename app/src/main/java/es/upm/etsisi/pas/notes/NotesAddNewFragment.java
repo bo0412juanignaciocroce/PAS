@@ -49,6 +49,8 @@ public class NotesAddNewFragment extends Fragment {
                                 content.getText().toString()
                         )
                 );
+                title.setText("");
+                content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
             }
         });

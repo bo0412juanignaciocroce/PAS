@@ -18,6 +18,12 @@ public interface INotesDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(NotesEntity grupo);
 
+    @Query("UPDATE "+NotesEntity.TABLA+" SET title=:title WHERE uid=:id")
+    void updateTitle(String title, int id);
+
+    @Query("UPDATE "+NotesEntity.TABLA+" SET content=:content WHERE uid=:id")
+    void updateContent(String content, int id);
+
     @Query("DELETE FROM " + NotesEntity.TABLA)
     void deleteAll();
 
