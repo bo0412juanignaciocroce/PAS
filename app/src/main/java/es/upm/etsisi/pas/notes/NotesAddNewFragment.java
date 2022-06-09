@@ -13,8 +13,20 @@ import androidx.fragment.app.Fragment;
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
 
 public class NotesAddNewFragment extends Fragment {
+    FirebaseDatabase database;
+
     private NotesRepository repository;
     public NotesAddNewFragment(NotesRepository repository){
         this.repository = repository;
@@ -37,18 +49,36 @@ public class NotesAddNewFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth mFirebaseAuth;
+                String user_uid;
+
                 if(title.getText().length()==0){
                     return;
                 }
                 if(content.getText().length()==0){
                     return;
                 }
+                database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference();
+                mFirebaseAuth = FirebaseAuth.getInstance();
+
                 repository.insert(
                         new NotesEntity(
                                 title.getText().toString(),
                                 content.getText().toString()
                         )
                 );
+
+                user_uid = mFirebaseAuth.getCurrentUser().getUid();
+                NotesEntity newNote = new NotesEntity(
+                        title.getText().toString(),
+                        content.getText().toString()
+                );
+
+                Gson gson = new Gson();
+                String json = gson.toJson(newNote);
+                myRef.child(user_uid).push().setValue(json);
+
                 title.setText("");
                 content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
