@@ -52,7 +52,13 @@
                 android:layout_weight="1" />
 
             <ImageButton
-                android:id="@+id/notes_edit_layout_button"
+                android:id="@+id/notes_edit_layout_button_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_input_delete" />
+
+            <ImageButton
+                android:id="@+id/notes_edit_layout_button_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/ic_input_add" />

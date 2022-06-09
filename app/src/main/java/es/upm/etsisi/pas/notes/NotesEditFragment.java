@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,7 +20,8 @@ public class NotesEditFragment extends Fragment {
 
     private EditText title;
     private EditText content;
-    private ImageButton b;
+    private ImageButton imageButtonAdd;
+    private ImageButton imageButtonDelete;
 
     public NotesEditFragment(NotesRepository repository){
         this.repository = repository;
@@ -45,8 +45,8 @@ public class NotesEditFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         title = view.findViewById(R.id.notes_edit_layout_title);
         content = view.findViewById(R.id.notes_edit_layout_content);
-        b = view.findViewById(R.id.notes_edit_layout_button);
-        b.setOnClickListener(new View.OnClickListener() {
+        imageButtonAdd = view.findViewById(R.id.notes_edit_layout_button_add);
+        imageButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(title.getText().length()==0){
@@ -58,6 +58,19 @@ public class NotesEditFragment extends Fragment {
                 notesEntity.setTitle(title.getText().toString());
                 notesEntity.setContent(content.getText().toString());
                 repository.update(
+                        notesEntity
+                );
+                notesEntity=null;
+                title.setText("");
+                content.setText("");
+                MainActivity.getMyFragmentManager().popBackStackImmediate();
+            }
+        });
+        imageButtonDelete = view.findViewById(R.id.notes_edit_layout_button_remove);
+        imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                repository.delete(
                         notesEntity
                 );
                 notesEntity=null;
