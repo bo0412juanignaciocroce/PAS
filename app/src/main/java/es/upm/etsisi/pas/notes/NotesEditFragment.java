@@ -66,7 +66,6 @@ public class NotesEditFragment extends Fragment {
                         notesEntity
                 );
                 /* On edit, before removing from current edit, upload to firebase */
-                Log.d(DebugTags.FIREBASE_STORAGE,"New JSON: "+notesEntity.serializeGSon());
                 firebaseNotes.UploadNote(notesEntity);
                 notesEntity=null;
                 title.setText("");

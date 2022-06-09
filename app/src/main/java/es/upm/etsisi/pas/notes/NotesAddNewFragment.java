@@ -77,7 +77,6 @@ public class NotesAddNewFragment extends Fragment {
                 content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
 
-                Log.d(DebugTags.FIREBASE_STORAGE,"New JSON: "+newNote.serializeGSon());
                 firebaseNotes.UploadNote(newNote);
             }
         });
