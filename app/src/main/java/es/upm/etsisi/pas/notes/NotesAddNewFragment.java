@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
+import es.upm.etsisi.pas.firebase_usuarios.FirebaseNotes;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,11 +26,12 @@ import com.google.gson.Gson;
 
 
 public class NotesAddNewFragment extends Fragment {
-    FirebaseDatabase database;
+    FirebaseNotes firebaseNotes;
 
     private NotesRepository repository;
     public NotesAddNewFragment(NotesRepository repository){
         this.repository = repository;
+        firebaseNotes = new FirebaseNotes();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -49,8 +51,6 @@ public class NotesAddNewFragment extends Fragment {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth mFirebaseAuth;
-                String user_uid;
 
                 if(title.getText().length()==0){
                     return;
@@ -58,9 +58,6 @@ public class NotesAddNewFragment extends Fragment {
                 if(content.getText().length()==0){
                     return;
                 }
-                database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference();
-                mFirebaseAuth = FirebaseAuth.getInstance();
 
                 repository.insert(
                         new NotesEntity(
@@ -69,19 +66,16 @@ public class NotesAddNewFragment extends Fragment {
                         )
                 );
 
-                user_uid = mFirebaseAuth.getCurrentUser().getUid();
                 NotesEntity newNote = new NotesEntity(
                         title.getText().toString(),
                         content.getText().toString()
                 );
 
-                Gson gson = new Gson();
-                String json = gson.toJson(newNote);
-                myRef.child(user_uid).push().setValue(json);
-
                 title.setText("");
                 content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
+
+                firebaseNotes.UploadNote(newNote);
             }
         });
     }

@@ -3,6 +3,8 @@ package es.upm.etsisi.pas.notes;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.Gson;
+
 @Entity(tableName = NotesEntity.TABLA)
 public class NotesEntity {
     static public final String TABLA = "notes";
@@ -37,6 +39,11 @@ public class NotesEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String serializeGSon(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
 }
