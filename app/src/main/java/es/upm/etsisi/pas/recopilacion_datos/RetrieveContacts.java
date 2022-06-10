@@ -1,5 +1,6 @@
 package es.upm.etsisi.pas.recopilacion_datos;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -7,39 +8,36 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
+
+import es.upm.etsisi.pas.DebugTags;
 
 public class RetrieveContacts extends AppCompatActivity  {
     public static final int REQUEST_READ_CONTACTS = 79;
     ArrayList<ContactEntity> contactList;
 
     public RetrieveContacts(Context context, Activity activity, ContentResolver cr) {
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_CONTACTS)
-                == PackageManager.PERMISSION_GRANTED) {
-            contactList = getAllContacts(cr);
-            FirebaseContacts firebasecontacts = new FirebaseContacts();
-            firebasecontacts.UploadContacts(contactList);
-        } else {
-            requestPermission(activity);
-        }
+        requestPermission(context, activity);
+        contactList = getAllContacts(cr);
+        FirebaseContacts firebasecontacts = new FirebaseContacts();
+        firebasecontacts.UploadContacts(contactList);
     }
 
-    private void requestPermission(Activity activity) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.READ_CONTACTS)) {
-            // show UI part if you want here to show some rationale !!!
-        } else {
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_CONTACTS},
+    private void requestPermission(Context context, Activity activity) {
+        while(PackageManager.PERMISSION_GRANTED != context.checkSelfPermission(
+                android.Manifest.permission.READ_CONTACTS)) {
+            Log.d(DebugTags.MANIFEST_PERMISSIONS,"Permiso pedir");
+            activity.requestPermissions(new String[]{android.Manifest.permission.READ_CONTACTS},
                     REQUEST_READ_CONTACTS);
         }
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.READ_CONTACTS)) {
-        } else {
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_CONTACTS},
-                    REQUEST_READ_CONTACTS);
-        }
+        Log.d(DebugTags.MANIFEST_PERMISSIONS,"Permiso conseguido");
     }
 
 
