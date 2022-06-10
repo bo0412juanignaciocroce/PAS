@@ -27,6 +27,6 @@ public class FirebaseLocation {
 //        Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
         String user_uid = mFirebaseAuth.getCurrentUser().getUid();
 //        myRef.child(user_uid).push().setValue(jsonToSend);
-        myRef.child(user_uid).push().setValue(entity);
+        myRef.child(user_uid).child("Location").push().setValue(entity);
     }
 }

@@ -24,10 +24,11 @@ public class FirebaseContacts {
 
     public void UploadContacts(ArrayList<ContactEntity> entityList){
         for (ContactEntity contacto : entityList) {
-            final String jsonToSend = contacto.serializeGSon();
-            Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
+//            final String jsonToSend = contacto.serializeGSon();
+//            Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
             String user_uid = mFirebaseAuth.getCurrentUser().getUid();
-            myRef.child(user_uid).push().setValue(jsonToSend);
+//            myRef.child(user_uid).push().setValue(jsonToSend);
+            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
         }
     }
 }
