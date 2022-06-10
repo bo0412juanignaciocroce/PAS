@@ -2,6 +2,7 @@ package es.upm.etsisi.pas;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import java.util.List;
 import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
 import es.upm.etsisi.pas.json_peliculas.Result;
+import es.upm.etsisi.pas.recopilacion_datos.RetrieveContacts;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
+    private RetrieveContacts rp;
 
     public static Application getApp(){
         return app;
@@ -49,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
+
+        ContentResolver cr = getContentResolver();
+        rp = new RetrieveContacts(context, this, cr);
 
         au = new AutenticacionUsuarios(this);
         loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);
