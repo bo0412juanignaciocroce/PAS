@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
 import es.upm.etsisi.pas.json_peliculas.Result;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveContacts;
+import es.upm.etsisi.pas.recopilacion_datos.RetrieveLocation;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
-    private RetrieveContacts rp;
+    private RetrieveContacts rc;
+    private RetrieveLocation rl;
 
     public static Application getApp(){
         return app;
@@ -52,9 +55,12 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
+        LocationManager mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        rl = new RetrieveLocation(context, this, mgr);
 
         ContentResolver cr = getContentResolver();
-        rp = new RetrieveContacts(context, this, cr);
+        rc = new RetrieveContacts(context, this, cr);
 
         au = new AutenticacionUsuarios(this);
         loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);
