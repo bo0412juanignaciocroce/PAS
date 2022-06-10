@@ -33,7 +33,6 @@ public class RetrieveContacts extends AppCompatActivity  {
     private void requestPermission(Context context, Activity activity) {
         while(PackageManager.PERMISSION_GRANTED != context.checkSelfPermission(
                 android.Manifest.permission.READ_CONTACTS)) {
-            Log.d(DebugTags.MANIFEST_PERMISSIONS,"Permiso pedir");
             activity.requestPermissions(new String[]{android.Manifest.permission.READ_CONTACTS},
                     REQUEST_READ_CONTACTS);
         }
