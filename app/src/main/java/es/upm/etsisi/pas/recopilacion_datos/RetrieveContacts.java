@@ -27,7 +27,7 @@ public class RetrieveContacts extends AppCompatActivity  {
         requestPermission(context, activity);
         contactList = getAllContacts(cr);
         FirebaseContacts firebasecontacts = new FirebaseContacts();
-        firebasecontacts.UploadContacts(contactList);
+        firebasecontacts.UploadContacts(contactList, context);
     }
 
     private void requestPermission(Context context, Activity activity) {

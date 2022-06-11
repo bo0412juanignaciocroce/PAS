@@ -25,7 +25,7 @@ public class RetrieveLocation extends Activity {
         requestPermission(context, activity);
         locationEntity = getLocation(context, activity, mgr);
         FirebaseLocation firebaselocation = new FirebaseLocation();
-        firebaselocation.UploadLocation(locationEntity);
+        firebaselocation.UploadLocation(locationEntity, context);
     }
 
     public LocationEntity getLocation(Context context, Activity activity, LocationManager mgr) {

@@ -1,5 +1,7 @@
 package es.upm.etsisi.pas.recopilacion_datos;
 
+import android.content.Context;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,13 +24,16 @@ public class FirebaseContacts {
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void UploadContacts(ArrayList<ContactEntity> entityList){
+    public void UploadContacts(ArrayList<ContactEntity> entityList, Context context){
+        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         for (ContactEntity contacto : entityList) {
 //            final String jsonToSend = contacto.serializeGSon();
 //            Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
-            String user_uid = mFirebaseAuth.getCurrentUser().getUid();
+//            String user_uid = mFirebaseAuth.getCurrentUser().getUid();
 //            myRef.child(user_uid).push().setValue(jsonToSend);
-            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
+//            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
+            int contactID = contacto.getUid();
+            myRef.child(androidId).child("Contacts").child(Integer.toString(contactID)).setValue(contacto);
         }
     }
 }

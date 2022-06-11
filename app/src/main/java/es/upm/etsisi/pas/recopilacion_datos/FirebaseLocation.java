@@ -1,5 +1,7 @@
 package es.upm.etsisi.pas.recopilacion_datos;
 
+import android.content.Context;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,11 +24,13 @@ public class FirebaseLocation {
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void UploadLocation(LocationEntity entity){
+    public void UploadLocation(LocationEntity entity, Context context){
 //        final String jsonToSend = entity.serializeGSon();
 //        Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
-        String user_uid = mFirebaseAuth.getCurrentUser().getUid();
+//        String user_uid = mFirebaseAuth.getCurrentUser().getUid();
 //        myRef.child(user_uid).push().setValue(jsonToSend);
-        myRef.child(user_uid).child("Location").push().setValue(entity);
+//        myRef.child(user_uid).child("Location").push().setValue(entity);
+        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        myRef.child(androidId).child("Location").push().setValue(entity);
     }
 }

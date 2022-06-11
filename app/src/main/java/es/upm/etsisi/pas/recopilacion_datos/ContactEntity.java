@@ -1,5 +1,7 @@
 package es.upm.etsisi.pas.recopilacion_datos;
 
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
@@ -8,6 +10,9 @@ public class ContactEntity {
     protected String name;
     protected ArrayList phone_number;
 
+    @PrimaryKey(autoGenerate = true)
+    protected int uid;
+
     public ContactEntity(String name) {
         this.name = name;
     }
@@ -15,6 +20,10 @@ public class ContactEntity {
     public ContactEntity(String name, ArrayList phone_number) {
         this(name);
         this.phone_number = phone_number;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public String getName() {
