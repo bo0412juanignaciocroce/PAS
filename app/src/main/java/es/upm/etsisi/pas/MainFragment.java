@@ -18,13 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.upm.etsisi.pas.json_libros.LibrosFragment;
 import es.upm.etsisi.pas.json_peliculas.PeliculasFragment;
 import es.upm.etsisi.pas.notes.NotesFragment;
 
 public class MainFragment extends Fragment {
     enum funcionalidadesDisponiblesIDs {
         Notas,
-        Peliculas
+        Peliculas,
+        Libros
     };
 
     private class FuncionalidadesDisponibles{
@@ -97,6 +99,8 @@ public class MainFragment extends Fragment {
                     "Notas", new NotesFragment()),
             new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Peliculas,
                     "Peliculas", new PeliculasFragment()),
+            new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Libros,
+                    "Libros", new LibrosFragment()),
     };
 
     FuncionalidadesDisponiblesAdapter funcionalidadesDisponiblesAdapter = null;
