@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,7 +53,7 @@ public class MainFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View mView = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.recyclerview_row_text, parent , false);
+                    R.layout.recyclerview_row_button, parent , false);
             return new FuncionalidadesDisponiblesAdapter.ViewHolder(mView);
         }
 
@@ -71,11 +72,12 @@ public class MainFragment extends Fragment {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-            private final TextView nombre;
+            private final Button nombre;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                nombre = itemView.findViewById(R.id.recyclerViewText_Text);
+                nombre = itemView.findViewById(R.id.recyclerview_row_button_button);
                 itemView.setOnClickListener(this);
+                nombre.setOnClickListener(this);
             }
 
             @Override
