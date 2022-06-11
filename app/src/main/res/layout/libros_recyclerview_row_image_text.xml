@@ -4,23 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/nombre_libros"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cover_libros"
-        android:text="TextView" />
-    <TextView
-        android:id="@+id/autor_libros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cover_libros"
-        android:text="TextView" />
-    <ImageView
-        android:id="@+id/cover_libros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/cover_libros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nombre_libros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/autor_libros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>
