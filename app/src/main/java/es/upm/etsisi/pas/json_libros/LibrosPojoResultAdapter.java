@@ -29,9 +29,13 @@ public class LibrosPojoResultAdapter extends RecyclerView.Adapter<LibrosPojoResu
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.titulo.setText(datos.get(position).getTitle());
-        String cover_url = "https://covers.openlibrary.org/b/olid/" + datos.get(position).getCoverEditionKey() + "-M.jpg";
-        Picasso.get().load(cover_url).resize(250,400).into(holder.cover);
+        if((datos.get(position).getAuthorName() != null) && (datos.get(position).getCoverEditionKey() != null)) {
+            holder.titulo.setText(datos.get(position).getTitle());
+            holder.autor.setText(datos.get(position).getAuthorName().get(0));
+            String cover_url = "https://covers.openlibrary.org/b/olid/" + datos.get(position).getCoverEditionKey() + "-M.jpg";
+            Picasso.get().load(cover_url).resize(250,400).into(holder.cover);
+        }
+
     }
     @Override
     public int getItemCount() {
@@ -45,6 +49,7 @@ public class LibrosPojoResultAdapter extends RecyclerView.Adapter<LibrosPojoResu
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.nombre_libros);
+            autor = itemView.findViewById(R.id.autor_libros);
             cover = itemView.findViewById(R.id.cover_libros);
         }
     }
