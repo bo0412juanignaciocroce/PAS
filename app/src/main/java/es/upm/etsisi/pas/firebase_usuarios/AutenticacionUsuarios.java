@@ -2,12 +2,7 @@ package es.upm.etsisi.pas.firebase_usuarios;
 
 // Firebase
 import android.app.Activity;
-import android.app.Application;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 import es.upm.etsisi.pas.BuildConfig;
+import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.R;
 import io.reactivex.rxjava3.annotations.NonNull;
 
@@ -25,8 +21,6 @@ import io.reactivex.rxjava3.annotations.NonNull;
  * logs out, it will automatically call the login window.
  */
 public class AutenticacionUsuarios {
-
-    final static String LOG_TAG = "btb";
 
     private final FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -48,12 +42,14 @@ public class AutenticacionUsuarios {
                     Toast.makeText(activity,
                             activity.getString(R.string.firebase_user_fmt, user_mail),
                             Toast.LENGTH_LONG).show();
-                    Log.i(LOG_TAG, "onAuthStateChanged() " +
+                    Log.d(DebugTags.FIREBASE_LOGIN, "onAuthStateChanged() " +
                             activity.getString(R.string.firebase_user_fmt, user_mail));
                     ((TextView) activity.findViewById(R.id.textView)).setText(
                             activity.getString(R.string.firebase_user_fmt, user_mail));
                 } else {
                     // user is signed out
+                    Log.d(DebugTags.FIREBASE_LOGIN, "onAuthStateChanged() " +
+                            "Already Logged in");
                     activity.startActivity(
                             // Get an instance of AuthUI based on the default activity
                             AuthUI.getInstance().
@@ -73,6 +69,7 @@ public class AutenticacionUsuarios {
                 }
             }
         };
+        Log.d(DebugTags.FIREBASE_LOGIN,"Autologin test");
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
