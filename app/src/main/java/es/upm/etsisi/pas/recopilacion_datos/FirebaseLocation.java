@@ -8,8 +8,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 import es.upm.etsisi.pas.DebugTags;
 
 public class FirebaseLocation {
@@ -25,12 +23,8 @@ public class FirebaseLocation {
     }
 
     public void UploadLocation(LocationEntity entity, Context context){
-//        final String jsonToSend = entity.serializeGSon();
-//        Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
-//        String user_uid = mFirebaseAuth.getCurrentUser().getUid();
-//        myRef.child(user_uid).push().setValue(jsonToSend);
-//        myRef.child(user_uid).child("Location").push().setValue(entity);
-        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String androidId = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         myRef.child(androidId).child("Location").push().setValue(entity);
     }
 }

@@ -9,13 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 import es.upm.etsisi.pas.R;
-import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
-import es.upm.etsisi.pas.json_peliculas.Result;
 
 public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepositoryAdapter
         .ViewHolder> {
@@ -35,7 +31,7 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
         }
     }
 
-    private NotesCallback cb;
+    private final NotesCallback cb;
     private final LayoutInflater mInflater;
     private List<NotesEntity> itemsList;
 
@@ -63,7 +59,7 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
             holder.userItemView.setText(current.getTitle());
         } else {
             // Covers the case of data not being ready yet.
-            holder.userItemView.setText("No item");
+            holder.userItemView.setText(R.string.NoItemText);
         }
     }
 
@@ -88,7 +84,4 @@ public class NotesRepositoryAdapter extends RecyclerView.Adapter<NotesRepository
                 : itemsList.size();
     }
 
-    public NotesEntity getGrupoAtPosition (int position) {
-        return itemsList.get(position);
-    }
 }

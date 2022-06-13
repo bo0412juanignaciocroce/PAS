@@ -47,7 +47,6 @@ public abstract class NotesRoomDatabase extends RoomDatabase {
     // Delete all content and repopulate the database whenever the app is started
     private static Callback sRoomDatabaseCallback =
             new Callback() {
-
                 @Override
                 public void onOpen(@NonNull SupportSQLiteDatabase db) {
                     super.onOpen(db);

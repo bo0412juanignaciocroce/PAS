@@ -2,7 +2,6 @@ package es.upm.etsisi.pas.notes;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +10,18 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 
-import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.MainActivity;
 import es.upm.etsisi.pas.R;
-import es.upm.etsisi.pas.firebase_usuarios.FirebaseNotes;
+import es.upm.etsisi.pas.recopilacion_datos.FirebaseNotes;
 
 
 public class NotesEditFragment extends Fragment {
     FirebaseNotes firebaseNotes;
-    private NotesRepository repository;
+    private final NotesRepository repository;
     private NotesEntity notesEntity;
 
     private EditText title;
     private EditText content;
-    private ImageButton imageButtonAdd;
-    private ImageButton imageButtonDelete;
 
     public NotesEditFragment(NotesRepository repository){
         this.repository = repository;
@@ -50,7 +46,7 @@ public class NotesEditFragment extends Fragment {
         // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
         title = view.findViewById(R.id.notes_edit_layout_title);
         content = view.findViewById(R.id.notes_edit_layout_content);
-        imageButtonAdd = view.findViewById(R.id.notes_edit_layout_button_add);
+        ImageButton imageButtonAdd = view.findViewById(R.id.notes_edit_layout_button_add);
         imageButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +69,7 @@ public class NotesEditFragment extends Fragment {
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
             }
         });
-        imageButtonDelete = view.findViewById(R.id.notes_edit_layout_button_remove);
+        ImageButton imageButtonDelete = view.findViewById(R.id.notes_edit_layout_button_remove);
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

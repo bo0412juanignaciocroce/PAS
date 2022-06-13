@@ -15,8 +15,8 @@ import es.upm.etsisi.pas.DebugTags;
  * simplifican la codificación del roomdb.
  */
 public class NotesRepository {
-    private INotesDAO iItemDAO;
-    private LiveData<List<NotesEntity>> ldList;
+    private final INotesDAO iItemDAO;
+    private final LiveData<List<NotesEntity>> ldList;
 
     /**
      * Constructor
@@ -30,9 +30,9 @@ public class NotesRepository {
         return ldList;
     }
 
-    public long insert(NotesEntity item) {
+    public void insert(NotesEntity item) {
         Log.d(DebugTags.FRAGMENT_TAG,"Size: "+ldList.getValue().size());
-        return iItemDAO.insert(item);
+        iItemDAO.insert(item);
     }
 
     public void update(NotesEntity item){

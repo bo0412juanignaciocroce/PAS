@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,7 +26,7 @@ public class MainFragment extends Fragment {
         Notas,
         Peliculas,
         Libros
-    };
+    }
 
     private class FuncionalidadesDisponibles{
         public final funcionalidadesDisponiblesIDs mid;
@@ -44,7 +43,7 @@ public class MainFragment extends Fragment {
 
     private class FuncionalidadesDisponiblesAdapter extends RecyclerView.Adapter<
             FuncionalidadesDisponiblesAdapter.ViewHolder>{
-        private List<FuncionalidadesDisponibles> datos;
+        private final List<FuncionalidadesDisponibles> datos;
 
         public FuncionalidadesDisponiblesAdapter(
                 List<FuncionalidadesDisponibles> funcionalidadesDisponibles) {
@@ -69,10 +68,6 @@ public class MainFragment extends Fragment {
             return datos.size();
         }
 
-        public final FuncionalidadesDisponibles getItem(int position){
-            return datos.get(position);
-        }
-
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final Button nombre;
             public ViewHolder(@NonNull View itemView) {
@@ -94,7 +89,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    final FuncionalidadesDisponibles arrayFuncionalidades[] = {
+    final FuncionalidadesDisponibles[] arrayFuncionalidades = {
             new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Notas,
                     "Notas", new NotesFragment()),
             new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Peliculas,

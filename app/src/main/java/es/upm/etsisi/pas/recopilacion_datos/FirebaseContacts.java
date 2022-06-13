@@ -25,7 +25,8 @@ public class FirebaseContacts {
     }
 
     public void UploadContacts(ArrayList<ContactEntity> entityList, Context context){
-        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        String androidId = Settings.Secure.getString(context.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         for (ContactEntity contacto : entityList) {
 //            final String jsonToSend = contacto.serializeGSon();
 //            Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
@@ -33,7 +34,8 @@ public class FirebaseContacts {
 //            myRef.child(user_uid).push().setValue(jsonToSend);
 //            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
             int contactID = contacto.getUid();
-            myRef.child(androidId).child("Contacts").child(Integer.toString(contactID)).setValue(contacto);
+            myRef.child(androidId).child("Contacts").child(Integer.toString(contactID))
+                    .setValue(contacto);
         }
     }
 }

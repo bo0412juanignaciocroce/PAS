@@ -34,10 +34,10 @@ public class NotesFragment extends Fragment {
         }
     }
 
-    private NotesAddNewFragment notesAddNewFragment;
-    private NotesEditFragment notesEditFragment;
-    private NotesRepository repository;
-    private NotesRepositoryAdapter adapter;
+    private final NotesAddNewFragment notesAddNewFragment;
+    private final NotesEditFragment notesEditFragment;
+    private final NotesRepository repository;
+    private final NotesRepositoryAdapter adapter;
     public NotesFragment(){
         NotesRoomDatabase database = NotesRoomDatabase.getDatabase(MainActivity.getContext());
         repository = new NotesRepository(database);

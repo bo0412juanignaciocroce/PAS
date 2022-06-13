@@ -15,8 +15,9 @@ import java.util.List;
 
 import es.upm.etsisi.pas.R;
 
-public class LibrosPojoResultAdapter extends RecyclerView.Adapter<LibrosPojoResultAdapter.ViewHolder> {
-    private List<Work> datos;
+public class LibrosPojoResultAdapter extends RecyclerView.Adapter
+        <LibrosPojoResultAdapter.ViewHolder> {
+    private final List<Work> datos;
     public LibrosPojoResultAdapter(List<Work> datos) {
         this.datos = datos;
     }
@@ -43,9 +44,9 @@ public class LibrosPojoResultAdapter extends RecyclerView.Adapter<LibrosPojoResu
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView titulo;
-        private TextView autor;
-        private ImageView cover;
+        private final TextView titulo;
+        private final TextView autor;
+        private final ImageView cover;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.nombre_libros);

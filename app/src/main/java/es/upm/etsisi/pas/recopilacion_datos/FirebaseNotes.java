@@ -1,11 +1,10 @@
-package es.upm.etsisi.pas.firebase_usuarios;
+package es.upm.etsisi.pas.recopilacion_datos;
 
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 
 import es.upm.etsisi.pas.DebugTags;
 import es.upm.etsisi.pas.notes.NotesEntity;

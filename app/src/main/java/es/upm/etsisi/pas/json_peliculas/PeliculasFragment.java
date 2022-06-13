@@ -1,6 +1,5 @@
 package es.upm.etsisi.pas.json_peliculas;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

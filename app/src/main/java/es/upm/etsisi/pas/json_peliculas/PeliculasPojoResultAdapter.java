@@ -11,14 +11,15 @@ import es.upm.etsisi.pas.R;
 
 public class PeliculasPojoResultAdapter extends RecyclerView.Adapter<PeliculasPojoResultAdapter
         .ViewHolder> {
-    private List<Result> datos;
+    private final List<Result> datos;
     public PeliculasPojoResultAdapter(List<Result> datos) {
         this.datos = datos;
     }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_row_image_text, parent ,
+        View mView = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.recyclerview_row_image_text, parent ,
                 false);
         return new ViewHolder(mView);
     }
@@ -35,8 +36,8 @@ public class PeliculasPojoResultAdapter extends RecyclerView.Adapter<PeliculasPo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView nombre;
-        private ImageView cover;
+        private final TextView nombre;
+        private final ImageView cover;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombre);
