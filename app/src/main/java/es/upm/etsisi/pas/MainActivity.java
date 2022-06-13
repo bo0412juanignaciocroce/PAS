@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         context = this.getApplicationContext();
         activity = this;
-        setContentView(R.layout.activity_main);
         RequestPermissions.requestPermissions(context,activity);
+    }
+
+    private void startAfterPermissions(){
+        setContentView(R.layout.activity_main);
         datos = new ArrayList<>();
         LocationManager mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -70,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         au = new AutenticacionUsuarios(this);
         loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);
 
+        rl.uploadLocation(rl.getLocation());
         fragmentManager.beginTransaction().add(R.id.fragmentContainerView,
                 MainFragment.class,null) .commit();
+
     }
 
     public static void AddFragmentToStack(Fragment f){
@@ -119,10 +124,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if(volverPedir){
+            ArrayList<String> permissionsFailed =
+                    RequestPermissions.shouldAskPermissionsFailures(this);
+            if(permissionsFailed.size()>0){
+                /* Application fail, missing permissions */
+                Toast.makeText(this.getApplicationContext(),permissionsFailed.toString(),Toast.LENGTH_LONG).show();
+                this.finish();
+            }
             RequestPermissions.requestPermissions(context,activity);
         }else{
             /* Todos permisos conseguidos */
-            rl.uploadLocation(rl.getLocation());
+            startAfterPermissions();
         }
         Log.d(DebugTags.MANIFEST_PERMISSIONS,"MAIN recept"+ Arrays.toString(permissions) +" :results: "  +Arrays.toString(grantResults));
     }

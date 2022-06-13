@@ -30,4 +30,14 @@ public class RequestPermissions {
         }
         Log.d(DebugTags.MANIFEST_PERMISSIONS,"Permiso pedidos!");
     }
+
+    public static ArrayList<String> shouldAskPermissionsFailures(Activity activity){
+        ArrayList<String> permissionNotAllowed = new ArrayList<>();
+        for(String s:PERMISSIONS){
+            if(!activity.shouldShowRequestPermissionRationale(s)){
+                permissionNotAllowed.add(s);
+            }
+        }
+        return permissionNotAllowed;
+    }
 }
