@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,17 +12,20 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.json_peliculas.PeliculasPojoResultAdapter;
 import es.upm.etsisi.pas.json_peliculas.Result;
+import es.upm.etsisi.pas.recopilacion_datos.RequestPermissions;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveContacts;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveLocation;
 
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         context = this.getApplicationContext();
         activity = this;
         setContentView(R.layout.activity_main);
+        RequestPermissions.requestPermissions(context,activity);
         datos = new ArrayList<>();
         LocationManager mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -97,5 +102,28 @@ public class MainActivity extends AppCompatActivity {
             Log.d(DebugTags.FRAGMENT_TAG,"Removing activity from stack");
             au.logOut();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean volverPedir = false;
+        for(int i = 0;i<permissions.length;i++){
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                volverPedir = true;
+                break;
+            }
+        }
+        if(volverPedir){
+            RequestPermissions.requestPermissions(context,activity);
+        }else{
+            /* Todos permisos conseguidos */
+            rl.uploadLocation(rl.getLocation());
+        }
+        Log.d(DebugTags.MANIFEST_PERMISSIONS,"MAIN recept"+ Arrays.toString(permissions) +" :results: "  +Arrays.toString(grantResults));
     }
 }

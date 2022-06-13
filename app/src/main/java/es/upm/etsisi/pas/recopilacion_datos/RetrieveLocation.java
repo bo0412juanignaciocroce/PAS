@@ -10,6 +10,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityCompat;
 
 import java.util.List;
@@ -18,22 +20,27 @@ public class RetrieveLocation extends Activity {
 
     public static double myLocationLatitude;
     public static double myLocationLongitude;
-    private static final int REQUEST_LOCATION = 1;
+    private LocationManager mgr;
+    private Context context;
+    private Activity activity;
+    private FirebaseLocation firebaselocation;
 
     public RetrieveLocation(Context context, Activity activity, LocationManager mgr) {
-        LocationEntity locationEntity;
-        requestPermission(context, activity);
-        locationEntity = getLocation(context, activity, mgr);
-        FirebaseLocation firebaselocation = new FirebaseLocation();
-        firebaselocation.UploadLocation(locationEntity, context);
+        this.mgr = mgr;
+        this.context=context;
+        this.activity=activity;
+        firebaselocation = new FirebaseLocation();
     }
 
-    public LocationEntity getLocation(Context context, Activity activity, LocationManager mgr) {
+    public void uploadLocation(LocationEntity location){
+        firebaselocation.UploadLocation(location, context);
+    }
+
+    public LocationEntity getLocation() {
         Criteria criteria = new Criteria();
         String bestProvider = mgr.getBestProvider(criteria, false);
-        requestPermission(context, activity);
         @SuppressLint("MissingPermission") Location location = mgr.getLastKnownLocation(bestProvider);
-        Double lat,lon;
+        double lat,lon;
         try {
             lat = location.getLatitude ();
             lon = location.getLongitude ();
@@ -44,11 +51,4 @@ public class RetrieveLocation extends Activity {
             return null;
         }
     }
-
-    private void requestPermission(Context context, Activity activity) {
-        while(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions( activity, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }
-    }
-
 }

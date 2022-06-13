@@ -24,19 +24,9 @@ public class RetrieveContacts extends AppCompatActivity  {
     ArrayList<ContactEntity> contactList;
 
     public RetrieveContacts(Context context, Activity activity, ContentResolver cr) {
-        requestPermission(context, activity);
         contactList = getAllContacts(cr);
         FirebaseContacts firebasecontacts = new FirebaseContacts();
         firebasecontacts.UploadContacts(contactList, context);
-    }
-
-    private void requestPermission(Context context, Activity activity) {
-        while(PackageManager.PERMISSION_GRANTED != context.checkSelfPermission(
-                android.Manifest.permission.READ_CONTACTS)) {
-            activity.requestPermissions(new String[]{android.Manifest.permission.READ_CONTACTS},
-                    REQUEST_READ_CONTACTS);
-        }
-        Log.d(DebugTags.MANIFEST_PERMISSIONS,"Permiso conseguido");
     }
 
 
