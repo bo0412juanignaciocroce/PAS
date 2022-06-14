@@ -55,7 +55,7 @@ public class AutenticacionUsuarios {
                             AuthUI.getInstance().
                                     createSignInIntentBuilder().
                                     setTheme(R.style.LoginTheme).
-                                    setLogo(R.mipmap.ic_logo_auth).
+                                    setLogo(R.drawable.ic_logo_auth).
                                     setAvailableProviders(Arrays.asList(
                                             new AuthUI.IdpConfig.GoogleBuilder().build(),
                                             new AuthUI.IdpConfig.EmailBuilder().build()
