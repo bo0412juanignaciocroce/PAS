@@ -25,6 +25,8 @@ import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.recopilacion_datos.RequestPermissions;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveContacts;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveLocation;
+import es.upm.etsisi.pas.utilidades.CifradoVigenere;
+import es.upm.etsisi.pas.utilidades.Cifrador;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final String clave = "KEY";
+        Cifrador c = new CifradoVigenere(clave);
+        final String original = "Prueba_de_texto_a_cifrar";
+        final String cifrado = c.cifrar(original);
+        final String descifrado = c.descifrar(cifrado);
+        Log.d(DebugTags.CIFRADOR, "Cifrador Vignere key: "+clave+" original: " + original
+                + " cifrado: " + cifrado + " descifrado: "+descifrado);
         app = this.getApplication();
         fragmentManager = getSupportFragmentManager();
         context = this.getApplicationContext();
