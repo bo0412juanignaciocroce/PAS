@@ -14,6 +14,9 @@ public class CifradoVigenere implements Cifrador{
     private static Map<Integer,Character> base64ValuesToCharacters = null;
     private static final int MAX_VALUE = 64;
 
+    public static final String CHAR_LIST =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
     private static void initializeCharactersToValues(){
         if(base64CharactersToValues==null) {
             base64CharactersToValues = new TreeMap<>();
