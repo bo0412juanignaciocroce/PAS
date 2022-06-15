@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -25,20 +26,23 @@ import es.upm.etsisi.pas.firebase_usuarios.AutenticacionUsuarios;
 import es.upm.etsisi.pas.recopilacion_datos.RequestPermissions;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveContacts;
 import es.upm.etsisi.pas.recopilacion_datos.RetrieveLocation;
-import es.upm.etsisi.pas.utilidades.CifradoVigenere;
-import es.upm.etsisi.pas.utilidades.Cifrador;
+import es.upm.etsisi.pas.utilidades_cifrado.CifradoVigenere;
+import es.upm.etsisi.pas.utilidades_cifrado.Cifrador;
 
 
 public class MainActivity extends AppCompatActivity {
+    private static String EMPTY_STRING = "";
     private static Application app = null;
     private static FragmentManager fragmentManager;
     private static Context context;
     private static Activity activity;
+    private static SharedPreferences sharedPreferences;
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
     private RetrieveContacts rc;
     private RetrieveLocation rl;
+    private static String cipherKey;
 
     public static Application getApp(){
         return app;
@@ -46,10 +50,22 @@ public class MainActivity extends AppCompatActivity {
     public static FragmentManager getMyFragmentManager(){return fragmentManager;}
     public static Context getContext() { return context; }
     public static Context getActivity() { return activity; }
+    public static SharedPreferences getSharedPreferences() { return sharedPreferences;}
+
+    public static void updateCipherKey(){
+        cipherKey = sharedPreferences.getString(
+                activity.getString(R.string.cipherKey),EMPTY_STRING);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = this.getApplication();
+        fragmentManager = getSupportFragmentManager();
+        context = this.getApplicationContext();
+        activity = this;
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        updateCipherKey();
         final String clave = "KEY";
         Cifrador c = new CifradoVigenere(clave);
         final String original = "Prueba_de_texto_a_cifrar";
@@ -57,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
         final String descifrado = c.descifrar(cifrado);
         Log.d(DebugTags.CIFRADOR, "Cifrador Vignere key: "+clave+" original: " + original
                 + " cifrado: " + cifrado + " descifrado: "+descifrado);
-        app = this.getApplication();
-        fragmentManager = getSupportFragmentManager();
-        context = this.getApplicationContext();
-        activity = this;
-        RequestPermissions.requestPermissions(context,activity);
+        Boolean requestedPermissions = RequestPermissions.requestPermissions(context,activity);
+        Log.d(DebugTags.MAIN_EXECUTION,"onCreate finish");
+        // In case it is not required to ask for permissions
+        if(!requestedPermissions){
+            startAfterPermissions();
+        }
     }
 
     private void startAfterPermissions(){
@@ -79,10 +96,14 @@ public class MainActivity extends AppCompatActivity {
         rl.uploadLocation(rl.getLocation());
         fragmentManager.beginTransaction().add(R.id.fragmentContainerView,
                 MainFragment.class,null) .commit();
+        Log.d(DebugTags.MAIN_EXECUTION,"startAfterPermissions");
+        if(cipherKey.equals(EMPTY_STRING)){
 
+        }
     }
 
     public static void AddFragmentToStack(Fragment f){
+        Log.d(DebugTags.MAIN_EXECUTION,"Added fragment to stack");
         Log.d(DebugTags.FRAGMENT_TAG,"Adding activity to stack");
         FragmentTransaction transaction =
                 MainActivity.getMyFragmentManager().beginTransaction();
@@ -103,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Log.d(DebugTags.FRAGMENT_TAG,"Removing activity from stack");
+            Log.d(DebugTags.MAIN_EXECUTION,"Logged out");
             au.logOut();
         }
     }
@@ -136,5 +157,24 @@ public class MainActivity extends AppCompatActivity {
             startAfterPermissions();
         }
         Log.d(DebugTags.MANIFEST_PERMISSIONS,"MAIN recept"+ Arrays.toString(permissions) +" :results: "  +Arrays.toString(grantResults));
+        Log.d(DebugTags.MAIN_EXECUTION,"Permissions completed");
+    }
+
+    @Override
+    public void onBackPressed() {
+        updateCipherKey();
+        if(!cipherKey.equals(EMPTY_STRING)){
+            //Only allow interactions if cipherKey is valid
+            super.onBackPressed();
+        }
+        Log.d(DebugTags.MAIN_EXECUTION,"BACK BUTTON PRESSED");
+    }
+
+    public static boolean isCipherKeyInitialized(){
+        return !cipherKey.equals(EMPTY_STRING);
+    }
+
+    public static void popBackStack(){
+        fragmentManager.popBackStackImmediate();
     }
 }

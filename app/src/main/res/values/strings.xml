@@ -7,4 +7,6 @@
     <string name="logout_button">Logout</string>
     <string name="firebase_user_fmt">Firebase User: %s</string>
     <string name="NoItemText">No item</string>
+    <string name="preference_file">es.upm.etsisi.pas.preference_file</string>
+    <string name="cipherKey">cipherKey</string>
 </resources>

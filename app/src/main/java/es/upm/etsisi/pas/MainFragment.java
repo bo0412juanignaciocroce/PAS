@@ -20,12 +20,15 @@ import java.util.List;
 import es.upm.etsisi.pas.json_libros.LibrosFragment;
 import es.upm.etsisi.pas.json_peliculas.PeliculasFragment;
 import es.upm.etsisi.pas.notes.NotesFragment;
+import es.upm.etsisi.pas.utilidades_cifrado.FragmentCipherKey;
 
 public class MainFragment extends Fragment {
+
     enum funcionalidadesDisponiblesIDs {
         Notas,
         Peliculas,
-        Libros
+        Libros,
+        Contraseña
     }
 
     private class FuncionalidadesDisponibles{
@@ -96,6 +99,8 @@ public class MainFragment extends Fragment {
                     "Peliculas", new PeliculasFragment()),
             new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Libros,
                     "Libros", new LibrosFragment()),
+            new FuncionalidadesDisponibles(funcionalidadesDisponiblesIDs.Contraseña,
+                    "Contraseña", new FragmentCipherKey()),
     };
 
     FuncionalidadesDisponiblesAdapter funcionalidadesDisponiblesAdapter = null;
@@ -121,5 +126,9 @@ public class MainFragment extends Fragment {
         rv.setAdapter(funcionalidadesDisponiblesAdapter);
         funcionalidadesDisponiblesAdapter.notifyDataSetChanged();
         Log.d(DebugTags.FRAGMENT_TAG,"Cantidad en adapter: "+funcionalidadesDisponiblesAdapter.getItemCount());
+        if(!MainActivity.isCipherKeyInitialized()){
+            //Fragment de pedir contraseña
+            MainActivity.AddFragmentToStack(arrayFuncionalidades[3].fragment);
+        }
     }
 }

@@ -6,4 +6,5 @@ public class DebugTags {
     public static final String MANIFEST_PERMISSIONS = "MANIFEST_PERMISSIONS";
     public static final String FIREBASE_LOGIN = "FIREBASE_LOGIN";
     public static final String CIFRADOR = "CIFRADOR";
+    public static final String MAIN_EXECUTION = "MAIN_EXECUTION";
 }
