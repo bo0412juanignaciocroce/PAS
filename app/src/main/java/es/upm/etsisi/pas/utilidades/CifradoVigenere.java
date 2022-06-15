@@ -51,7 +51,7 @@ public class CifradoVigenere implements Cifrador{
     }
 
     private String vigenereOperation(final String s, final Operation o){
-        char cifrado[] = new char[s.length()];
+        char[] cifrado = new char[s.length()];
         Iterator<Character> currentKeyIterator = keyIterable.iterator();
         int position = 0;
         for(final char c : s.toCharArray()){
