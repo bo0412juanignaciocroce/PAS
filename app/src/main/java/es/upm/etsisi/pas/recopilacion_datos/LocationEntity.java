@@ -2,7 +2,7 @@ package es.upm.etsisi.pas.recopilacion_datos;
 
 import com.google.gson.Gson;
 
-public class LocationEntity {
+public class LocationEntity implements SerializableEntity {
     static Gson gson = new Gson();
     private double latitude;
     private double longitude;

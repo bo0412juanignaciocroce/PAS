@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import es.upm.etsisi.pas.DebugTags;
+import es.upm.etsisi.pas.MainActivity;
 
 public class FirebaseContacts {
     FirebaseDatabase database;
@@ -25,6 +26,7 @@ public class FirebaseContacts {
     }
 
     public void UploadContacts(ArrayList<ContactEntity> entityList, Context context){
+        Log.d(DebugTags.FIREBASE_STORAGE,"Upload contacts");
         String androidId = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         for (ContactEntity contacto : entityList) {
@@ -35,7 +37,7 @@ public class FirebaseContacts {
 //            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
             int contactID = contacto.getUid();
             myRef.child(androidId).child("Contacts").child(Integer.toString(contactID))
-                    .setValue(contacto);
+                    .setValue(MainActivity.getCurrentCipher().cifrar(contacto));
         }
     }
 }

@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
-public class ContactEntity {
+public class ContactEntity implements SerializableEntity{
     static Gson gson = new Gson();
     protected String name;
     protected ArrayList phone_number;

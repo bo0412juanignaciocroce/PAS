@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import es.upm.etsisi.pas.DebugTags;
 
 public class RequestPermissions {
-    public static final String PERMISSION_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    public static final String PERMISSION_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     public static final String PERMISSION_CONTACTS = Manifest.permission.READ_CONTACTS;
     public static final String[] PERMISSIONS = {PERMISSION_CONTACTS,PERMISSION_LOCATION};
     public static final int PERMISSION_REQUEST_CODE = 0;

@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import es.upm.etsisi.pas.DebugTags;
+import es.upm.etsisi.pas.MainActivity;
 
 public class FirebaseLocation {
     FirebaseDatabase database;
@@ -23,8 +24,10 @@ public class FirebaseLocation {
     }
 
     public void UploadLocation(LocationEntity entity, Context context){
+        Log.d(DebugTags.FIREBASE_STORAGE,"Upload location");
         String androidId = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        myRef.child(androidId).child("Location").push().setValue(entity);
+        myRef.child(androidId).child("Location").push().setValue(MainActivity.getCurrentCipher()
+                .cifrar(entity));
     }
 }

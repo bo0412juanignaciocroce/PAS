@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private AutenticacionUsuarios au;
     private final String LOG_TAG = "MAIN";
     LogoutHanlder loginStatus = null;
-    private RetrieveContacts rc;
-    private RetrieveLocation rl;
+    private static RetrieveContacts rc;
+    private static RetrieveLocation rl;
     private static String cipherKey;
+    private static Cifrador cifrador = null;
 
     public static Application getApp(){
         return app;
@@ -53,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences getSharedPreferences() { return sharedPreferences;}
 
     public static void updateCipherKey(){
-        cipherKey = sharedPreferences.getString(
+        String newCipherKey = sharedPreferences.getString(
                 activity.getString(R.string.cipherKey),EMPTY_STRING);
+        if(cipherKey==null || !cipherKey.equals(newCipherKey)){
+            cipherKey = newCipherKey;
+            cifrador = new CifradoVigenere(cipherKey);
+        }
     }
 
     @Override
@@ -97,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().add(R.id.fragmentContainerView,
                 MainFragment.class,null) .commit();
         Log.d(DebugTags.MAIN_EXECUTION,"startAfterPermissions");
-        if(cipherKey.equals(EMPTY_STRING)){
-
-        }
     }
 
     public static void AddFragmentToStack(Fragment f){
@@ -176,5 +178,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void popBackStack(){
         fragmentManager.popBackStackImmediate();
+    }
+
+    public static Cifrador getCurrentCipher(){
+        return cifrador;
     }
 }

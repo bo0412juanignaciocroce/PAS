@@ -1,5 +1,7 @@
 package es.upm.etsisi.pas.utilidades_cifrado;
 
+import android.util.Log;
+
 import com.google.common.collect.Iterables;
 
 import java.util.Iterator;
@@ -7,8 +9,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import es.upm.etsisi.pas.DebugTags;
+import es.upm.etsisi.pas.recopilacion_datos.SerializableEntity;
+
 public class CifradoVigenere implements Cifrador{
     private final Iterable<Character> keyIterable;
+    private final int keyLenght;
     //RFC 4648 following https://www.ietf.org/rfc/rfc4648.txt
     private static Map<Character,Integer> base64CharactersToValues = null;
     private static Map<Integer,Character> base64ValuesToCharacters = null;
@@ -42,6 +48,7 @@ public class CifradoVigenere implements Cifrador{
 
     public CifradoVigenere(String key){
         initializeMap();
+        keyLenght = key.length();
         keyIterable = Iterables.cycle(key.chars().mapToObj(c -> (char)c)
                 .collect(Collectors.toList()));
     }
@@ -51,6 +58,10 @@ public class CifradoVigenere implements Cifrador{
     }
 
     private String vigenereOperation(final String s, final Operation o){
+        if(s.length()==0 || keyLenght==0){
+            Log.d(DebugTags.CIFRADOR,"NO DATA!");
+            return null;
+        }
         char[] cifrado = new char[s.length()];
         Iterator<Character> currentKeyIterator = keyIterable.iterator();
         int position = 0;
@@ -70,6 +81,15 @@ public class CifradoVigenere implements Cifrador{
         return new String(cifrado);
     }
 
+
+    @Override
+    public String cifrar(SerializableEntity entity) {
+        if(entity == null){
+            Log.d(DebugTags.CIFRADOR,"NO DATA!");
+            return null;
+        }
+        return cifrar(entity.serializeGSon());
+    }
 
     @Override
     public String cifrar(String crudo) {
