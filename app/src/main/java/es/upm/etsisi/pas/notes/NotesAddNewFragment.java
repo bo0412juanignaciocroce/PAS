@@ -50,23 +50,20 @@ public class NotesAddNewFragment extends Fragment {
                     return;
                 }
 
-                repository.insert(
-                        new NotesEntity(
-                                title.getText().toString(),
-                                content.getText().toString()
-                        )
-                );
-
                 NotesEntity newNote = new NotesEntity(
                         title.getText().toString(),
-                        content.getText().toString()
+                        MainActivity.getCurrentCipher().cifrar(content.getText().toString())
                 );
+
+
+                firebaseNotes.UploadNote( newNote );
+
+                repository.insert( newNote );
 
                 title.setText("");
                 content.setText("");
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
 
-                firebaseNotes.UploadNote(newNote);
             }
         });
     }

@@ -25,9 +25,10 @@ public class FirebaseNotes {
     public void UploadNote(NotesEntity entity){
         Log.d(DebugTags.FIREBASE_STORAGE,"Upload note");
         final String jsonToSend = entity.serializeGSon();
-        Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
         String user_uid = mFirebaseAuth.getCurrentUser().getUid();
-        myRef.child(user_uid).child("Notes").push().setValue(
-                MainActivity.getCurrentCipher().cifrar(jsonToSend));
+        String jsonAEnviar = MainActivity.getCurrentCipher().cifrar(jsonToSend);
+        Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend +" -->as: "
+                +jsonAEnviar);
+        myRef.child(user_uid).child("Notes").push().setValue(jsonAEnviar);
     }
 }

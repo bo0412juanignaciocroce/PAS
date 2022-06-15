@@ -38,6 +38,12 @@ public class NotesEditFragment extends Fragment {
         return inflater.inflate(R.layout.notes_edit_layout, parent, false);
     }
 
+    private void setContent(){
+        /* Set data to be displayed */
+        title.setText(notesEntity.getTitle());
+        content.setText(MainActivity.getCurrentCipher().descifrar(notesEntity.getContent()));
+    }
+
     // This event is triggered soon after onCreateView().
     // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
@@ -57,12 +63,10 @@ public class NotesEditFragment extends Fragment {
                     return;
                 }
                 notesEntity.setTitle(title.getText().toString());
-                notesEntity.setContent(content.getText().toString());
-                repository.update(
-                        notesEntity
-                );
+                notesEntity.setContent(MainActivity.getCurrentCipher().cifrar(content.getText().toString()));
                 /* On edit, before removing from current edit, upload to firebase */
                 firebaseNotes.UploadNote(notesEntity);
+                repository.update( notesEntity );
                 notesEntity=null;
                 title.setText("");
                 content.setText("");
@@ -82,15 +86,12 @@ public class NotesEditFragment extends Fragment {
                 MainActivity.getMyFragmentManager().popBackStackImmediate();
             }
         });
-        /* Set data to be displayed */
-        title.setText(notesEntity.getTitle());
-        content.setText(notesEntity.getContent());
+        setContent();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        title.setText(notesEntity.getTitle());
-        content.setText(notesEntity.getContent());
+        setContent();
     }
 }

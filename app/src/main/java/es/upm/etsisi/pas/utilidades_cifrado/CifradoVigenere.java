@@ -15,10 +15,12 @@ import es.upm.etsisi.pas.recopilacion_datos.SerializableEntity;
 public class CifradoVigenere implements Cifrador{
     private final Iterable<Character> keyIterable;
     private final int keyLenght;
-    //RFC 4648 following https://www.ietf.org/rfc/rfc4648.txt
     private static Map<Character,Integer> base64CharactersToValues = null;
     private static Map<Integer,Character> base64ValuesToCharacters = null;
 
+
+    public static final String CHAR_ALLOWED_WITHOUT_CIPHER = "'\"{}:,. \n\0\\";
+    //RFC 4648 following https://www.ietf.org/rfc/rfc4648.txt
     public static final String CHAR_LIST =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
     private static final int MAX_VALUE = CHAR_LIST.length();
@@ -58,7 +60,7 @@ public class CifradoVigenere implements Cifrador{
     }
 
     private String vigenereOperation(final String s, final Operation o){
-        if(s.length()==0 || keyLenght==0){
+        if(s == null || s.length()==0 || keyLenght==0 || o == null){
             Log.d(DebugTags.CIFRADOR,"NO DATA!");
             return null;
         }
@@ -66,15 +68,22 @@ public class CifradoVigenere implements Cifrador{
         Iterator<Character> currentKeyIterator = keyIterable.iterator();
         int position = 0;
         for(final char c : s.toCharArray()){
-            if(c == ' ' || c == '\0'){
-                // Not process spaces
-                continue;
-            }
             final Integer valorFuente = base64CharactersToValues.get(c);
-            final Character k = currentKeyIterator.next();
-            final Integer valorKey = base64CharactersToValues.get(k);
-            final int valorResultado = Math.floorMod(o.operation(valorFuente,valorKey),MAX_VALUE);
-            final Character resultado = base64ValuesToCharacters.get(valorResultado);
+            Character resultado;
+            //Si el carácter no está en el juego
+            if(valorFuente != null) {
+                final Character k = currentKeyIterator.next();
+                final Integer valorKey = base64CharactersToValues.get(k);
+                final int valorResultado = Math.floorMod(o.operation(valorFuente,valorKey),MAX_VALUE);
+                resultado = base64ValuesToCharacters.get(valorResultado);
+            }else{
+                if (CHAR_ALLOWED_WITHOUT_CIPHER.indexOf(c) != -1) {
+                    resultado = c;
+                }else{
+                    Log.d(DebugTags.CIFRADOR,"Fallo de caŕacter: '"+c+"'");
+                    throw new IllegalArgumentException("Character out of valid ranges: '"+c+"'");
+                }
+            }
             cifrado[position++]= resultado;
         }
         //cifrado[position]='\0'; //End of string
@@ -93,11 +102,19 @@ public class CifradoVigenere implements Cifrador{
 
     @Override
     public String cifrar(String crudo) {
+        if(crudo==null){
+            Log.d(DebugTags.CIFRADOR,"NO STRING DATA CIFRAR!");
+            return null;
+        }
         return vigenereOperation(crudo, Integer::sum);
     }
 
     @Override
     public String descifrar(String cifrado) {
+        if(cifrado==null){
+            Log.d(DebugTags.CIFRADOR,"NO STRING DATA DESCIFRAR!");
+            return null;
+        }
         return vigenereOperation(cifrado, new Operation() {
             @Override
             public Integer operation(Integer stringValue, Integer keyValue) {

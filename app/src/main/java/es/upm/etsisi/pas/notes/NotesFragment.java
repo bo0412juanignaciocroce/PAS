@@ -27,6 +27,8 @@ import es.upm.etsisi.pas.json_peliculas.Result;
 
 
 public class NotesFragment extends Fragment {
+    private RecyclerView rv;
+
     private class FragmentCallback implements NotesCallback{
         @Override
         public void onClickElement(int position) {
@@ -72,10 +74,11 @@ public class NotesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 MainActivity.AddFragmentToStack(notesAddNewFragment);
+                adapter.notifyDataSetChanged();
             }
         });
 
-        RecyclerView rv = view.findViewById(R.id.notes_layout_recyclerview);
+        rv = view.findViewById(R.id.notes_layout_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(MainActivity.getContext()));
         rv.setAdapter(adapter);
     }
@@ -84,5 +87,12 @@ public class NotesFragment extends Fragment {
         Log.d(DebugTags.FRAGMENT_TAG,"Clicked position: "+pos);
         notesEditFragment.setCurrentNotesEntity(adapter.getEntity(pos));
         MainActivity.AddFragmentToStack(notesEditFragment);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

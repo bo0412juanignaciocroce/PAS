@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.Gson;
 
+import es.upm.etsisi.pas.MainActivity;
+
 @Entity(tableName = NotesEntity.TABLA)
 public class NotesEntity {
     static Gson gson = new Gson();
