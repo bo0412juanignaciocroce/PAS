@@ -2,7 +2,6 @@ package es.upm.etsisi.pas.recopilacion_datos;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -13,17 +12,15 @@ import es.upm.etsisi.pas.DebugTags;
 public class RetrieveLocation extends Activity {
 
     private final LocationManager mgr;
-    private final Context context;
     private final FirebaseLocation firebaselocation;
 
-    public RetrieveLocation(Context context, LocationManager mgr) {
+    public RetrieveLocation(LocationManager mgr) {
         this.mgr = mgr;
-        this.context=context;
         firebaselocation = new FirebaseLocation();
     }
 
     public void uploadLocation(LocationEntity location){
-        firebaselocation.UploadLocation(location, context);
+        firebaselocation.UploadLocation(location);
     }
 
     public LocationEntity getLocation() {

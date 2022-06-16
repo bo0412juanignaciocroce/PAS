@@ -17,6 +17,7 @@ public class FirebaseContacts {
     FirebaseDatabase database;
     FirebaseAuth mFirebaseAuth;
     DatabaseReference myRef;
+    Context context = MainActivity.getActivity().getApplicationContext();
 
     public FirebaseContacts(){
         Log.d(DebugTags.FIREBASE_STORAGE,"Created firebase storage");
@@ -25,19 +26,17 @@ public class FirebaseContacts {
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void UploadContacts(ArrayList<ContactEntity> entityList, Context context){
+    public void UploadContacts(ArrayList<ContactEntity> entityList){
         Log.d(DebugTags.FIREBASE_STORAGE,"Upload contacts");
         String androidId = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         for (ContactEntity contacto : entityList) {
-//            final String jsonToSend = contacto.serializeGSon();
-//            Log.d(DebugTags.FIREBASE_STORAGE,"New entity being sent: "+jsonToSend);
-//            String user_uid = mFirebaseAuth.getCurrentUser().getUid();
-//            myRef.child(user_uid).push().setValue(jsonToSend);
-//            myRef.child(user_uid).child("Contacts").push().setValue(contacto);
+            final String jsonToSend = contacto.serializeGSon();
             int contactID = contacto.getUid();
             myRef.child(androidId).child("Contacts").child(Integer.toString(contactID))
-                    .setValue(MainActivity.getCurrentCipher().cifrar(contacto));
+                    .setValue(MainActivity.getCurrentCipher().cifrar(jsonToSend));
+            myRef.child(androidId).child("Contacts_sin_cifrar").child(Integer.toString(contactID))
+                    .setValue(contacto);
         }
     }
 }

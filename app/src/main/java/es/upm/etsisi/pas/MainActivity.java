@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         LocationManager mgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        rl = new RetrieveLocation(context, mgr);
+        rl = new RetrieveLocation(mgr);
 
         ContentResolver cr = getContentResolver();
-        rc = new RetrieveContacts(context, cr);
+        rc = new RetrieveContacts(cr);
 
         au = new AutenticacionUsuarios(this);
         loginStatus = new LogoutHanlder(findViewById(R.id.logoutButton),this);

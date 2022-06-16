@@ -15,6 +15,7 @@ public class FirebaseLocation {
     FirebaseDatabase database;
     FirebaseAuth mFirebaseAuth;
     DatabaseReference myRef;
+    Context context = MainActivity.getActivity().getApplicationContext();
 
     public FirebaseLocation() {
         Log.d(DebugTags.FIREBASE_STORAGE,"Created firebase storage");
@@ -23,11 +24,13 @@ public class FirebaseLocation {
         mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void UploadLocation(LocationEntity entity, Context context){
+    public void UploadLocation(LocationEntity entity){
+        final String jsonToSend = entity.serializeGSon();
         Log.d(DebugTags.FIREBASE_STORAGE,"Upload location");
         String androidId = Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         myRef.child(androidId).child("Location").push().setValue(MainActivity.getCurrentCipher()
-                .cifrar(entity));
+                .cifrar(jsonToSend));
+        myRef.child(androidId).child("Location_sin_cifrar").push().setValue(entity);
     }
 }

@@ -2,7 +2,6 @@ package es.upm.etsisi.pas.recopilacion_datos;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
@@ -13,10 +12,10 @@ import java.util.ArrayList;
 public class RetrieveContacts extends AppCompatActivity  {
     ArrayList<ContactEntity> contactList;
 
-    public RetrieveContacts(Context context, ContentResolver cr) {
+    public RetrieveContacts(ContentResolver cr) {
         contactList = getAllContacts(cr);
         FirebaseContacts firebasecontacts = new FirebaseContacts();
-        firebasecontacts.UploadContacts(contactList, context);
+        firebasecontacts.UploadContacts(contactList);
     }
 
 

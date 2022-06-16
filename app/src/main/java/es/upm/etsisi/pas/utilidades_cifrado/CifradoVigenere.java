@@ -19,7 +19,7 @@ public class CifradoVigenere implements Cifrador{
     private static Map<Integer,Character> base64ValuesToCharacters = null;
 
 
-    public static final String CHAR_ALLOWED_WITHOUT_CIPHER = "'\"{}:,. \n\0\\";
+    public static final String CHAR_ALLOWED_WITHOUT_CIPHER = "'\"{}:,. \n\0\\[]()";
     //RFC 4648 following https://www.ietf.org/rfc/rfc4648.txt
     public static final String CHAR_LIST =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
