@@ -1,20 +1,20 @@
 package es.upm.etsisi.pas.recopilacion_datos;
 
-import androidx.room.PrimaryKey;
-
-import java.util.ArrayList;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class ContactEntity implements SerializableEntity{
+    private static final AtomicInteger count = new AtomicInteger(0);
     static Gson gson = new Gson();
     protected String name;
     protected ArrayList phone_number;
-
-    @PrimaryKey(autoGenerate = true)
     protected int uid;
 
     public ContactEntity(String name) {
         this.name = name;
+        this.uid = count.incrementAndGet();
     }
 
     public ContactEntity(String name, ArrayList phone_number) {
